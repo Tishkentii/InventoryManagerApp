@@ -19,8 +19,11 @@ namespace InventoryManagerApp.ViewModels
 
         #region Properties
 
-        public SearchCriteria Criteria { get; set; }
-
+        public SearchCriteria Criteria
+        {
+            get;
+            set;
+        }
 
         #endregion
 

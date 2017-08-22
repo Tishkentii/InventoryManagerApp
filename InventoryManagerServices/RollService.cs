@@ -20,21 +20,23 @@ namespace InventoryManagerServices
             _accessRepository = accessRepository;
         }
 
-        public void SynchronizeDatabases()
+        public async Task SynchronizeDatabasesAsync()
         {
-            int id = GetLastCreatedRollID();
-            var accessData = _accessRepository.ExecuteQuery(CommandStringHelper.GetSynchonizationCommandString(id));
-            _sqlRepository.BulkCopyData("Rolls", accessData, CommandStringHelper.AccessToSqlColumnMapping);
+            var id = await _sqlRepository.ExecuteScalarAsync(CommandStringHelper.LastCreatedRollIDCommandString).ConfigureAwait(false);
+            DataTable accessData = await Task.Run(() => _accessRepository.ExecuteQuery(CommandStringHelper.GetSynchonizationCommandString((int)id))).ConfigureAwait(false);
+            await _sqlRepository.BulkCopyDataAsync("Rolls", accessData, CommandStringHelper.AccessToSqlColumnMapping).ConfigureAwait(false);
         }
 
-        public IEnumerable<RollSummary> GetRollsSummaryAccordingToCriteria(SearchCriteria criteria)
+        public async Task<IEnumerable<RollSummary>> GetRollsSummaryAccordingToCriteriaAsync(SearchCriteria criteria)
         {
-            yield return new RollSummary(10, 200, 0.07, 100.12, 4381, DateTime.Now, DateTime.Now);
-            yield return new RollSummary(12, 100, 0.07, 70.12, 481, DateTime.Now, DateTime.Now);
-            yield return new RollSummary(30, 400, 0.12, 100.12, 4381, DateTime.Now, DateTime.Now);
-            yield return new RollSummary(9, 220, 0.09, 700.12, 1381, DateTime.Now, DateTime.Now);
-            yield return new RollSummary(5, 440, 0.12, 120.12, 3381, DateTime.Now, DateTime.Now);
-
+            var rollSummaryRawData = await Task.Run(() => _sqlRepository.ExecuteQuery(CommandStringHelper.GetRollSummaryCommandString(criteria)));
+            var list = new List<RollSummary>();
+            Parallel.ForEach(rollSummaryRawData.AsEnumerable(), (rawData =>
+            {
+                lock (list)
+                    list.Add(new RollSummary(rawData));
+            }));
+            return list;
         }
 
         public IEnumerable<Roll> GetRollDetailsFromSummary(RollSummary summary)
@@ -46,9 +48,5 @@ namespace InventoryManagerServices
             yield return new Roll(5);
         }
 
-        int GetLastCreatedRollID()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

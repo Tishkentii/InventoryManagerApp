@@ -7,15 +7,13 @@ using System.Threading.Tasks;
 
 namespace InventoryManagerModel
 {
-    public class SearchCriteria : INotifyPropertyChanged
+    public class SearchCriteria : BaseModel
     {
         public SearchCriteria()
         {
             _searchType = SearchType.Stock;
-            RollType = RollType.Tube;
+            _rollType = RollType.Tube;
         }
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         #region Properties
 
@@ -23,43 +21,39 @@ namespace InventoryManagerModel
         public SearchType SearchType
         {
             get => _searchType;
-            set
-            {
-                _searchType = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SearchType)));
-            }
-        }
-
-        double _width;
-        public double Width
-        {
-            get => _width;
-            set => _width = value >= 0 ? value : throw new ArgumentException("Width cannot be 0 or negative");
-        }
-
-        double _thickness;
-
-
-        public double Thickness
-        {
-            get => _thickness;
-            set => _thickness = value >= 0 ? value : throw new ArgumentException("Thickness cannot be 0 or negative.");
+            set => SetProperty(ref _searchType, value);
         }
 
         RollType _rollType;
         public RollType RollType
         {
             get => _rollType;
-            set
-            {
-                _rollType = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(RollType)));
-            }
+            set => SetProperty(ref _rollType, value);
         }
 
-        public DateTime? CreatedAfterDate { get; set; }
+        public int? Width
+        {
+            get;
+            set;
+        }
 
-        public DateTime? CreatedBeforeDate { get; set; }
+        public int? Thickness
+        {
+            get;
+            set;
+        }
+
+        public DateTime? CreatedAfterDate
+        {
+            get;
+            set;
+        }
+
+        public DateTime? CreatedBeforeDate
+        {
+            get;
+            set;
+        }
 
         #endregion
 

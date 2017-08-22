@@ -22,7 +22,7 @@ namespace InventoryManagerApp.ViewModels
             _rollService = new RollService(new MsSqlRepository("test"), new MsAccessRepository("test"));
             //SearchVM = new SearchViewModel();
 
-            MessengerInstance.Register<SearchCriteria>(this, HideSearch);
+            MessengerInstance.Register<SearchCriteria>(this, PerformSearch);
         }
 
         #region Binding properties
@@ -31,22 +31,14 @@ namespace InventoryManagerApp.ViewModels
         public SearchViewModel SearchVM
         {
             get => _searchViewModel;
-            set
-            {
-                _searchViewModel = value;
-                RaisePropertyChanged(nameof(SearchVM));
-            }
+            set => Set(ref _searchViewModel, value);
         }
 
         ResultViewModel _resultViewModel;
         public ResultViewModel ResultVM
         {
             get => _resultViewModel;
-            set
-            {
-                _resultViewModel = value;
-                RaisePropertyChanged(nameof(ResultVM));
-            }
+            set => Set(ref _resultViewModel, value);
         }
 
         #endregion
@@ -65,9 +57,10 @@ namespace InventoryManagerApp.ViewModels
             //ResultVM = null;
         }
 
-        public void HideSearch(SearchCriteria criteria)
+        public async void PerformSearch(SearchCriteria criteria)
         {
-            ResultVM = new ResultViewModel(_rollService, criteria);
+            var summary = await _rollService.GetRollsSummaryAccordingToCriteriaAsync(criteria).ConfigureAwait(false);
+            ResultVM = new ResultViewModel(_rollService, criteria, summary);
             SearchVM = null;
         }
     }

@@ -7,9 +7,11 @@ using InventoryManagerModel;
 
 namespace InventoryManagerServices
 {
-    internal static class CommandStringHelper
+    public class CommandStringHelper
     {
-        internal static Dictionary<string, string> AccessToSqlColumnMapping =>
+        #region Properties
+
+        public static Dictionary<string, string> AccessToSqlColumnMapping =>
             new Dictionary<string, string>
             {
                 { "rolkaID", "ID" },
@@ -25,15 +27,47 @@ namespace InventoryManagerServices
                 { "Коментар екстр", "Comment" }
             };
 
-        internal static string GetSynchonizationCommandString(int lastRollAddedID)
+        public static string LastCreatedRollIDCommandString =>
+                "SELECT max(ID) FROM dbo.Rolls";
+
+        #endregion
+
+        public static string GetSynchonizationCommandString(int lastRollAddedID)
         {
             return $"SELECT rolkaID, Код, Тип, [Ширина (mm)], ROUND([Дължина (m)],2) as [Дължина (m)], [Дебелина (µm)], ROUND([Изч тегло (kg)],2) as [Изч тегло (kg)], ROUND([Изм тегло (kg)],2) as [Изм тегло (kg)], Екструдерист, [Дата/Час], [Коментар екстр] FROM rolki WHERE rolkaID > {lastRollAddedID}";
         }
 
-        internal static string GetRollSummaryCommandString(SearchCriteria criteria)
+        public static string GetRollSummaryCommandString(SearchCriteria criteria)
         {
-            var builder = new StringBuilder("SELECT * FROM dbo.Rolls where");
+            if (criteria == null)
+                throw new ArgumentNullException("criteria");
 
+            var builder = new StringBuilder($"SELECT * FROM dbo.Rolls WHERE Type = ");
+            builder.Append(criteria.RollType == RollType.Tube ? "'O'" : "'I'");
+            if (criteria.Width.HasValue)
+                builder.Append($" AND Width = {criteria.Width.Value}");
+            if (criteria.Thickness.HasValue)
+                builder.Append($" AND Thickness = {criteria.Thickness.Value}");
+            switch (criteria.SearchType)
+            {
+                case SearchType.Stock:
+                    builder.Append($" AND ConsumedOn is null");
+                    break;
+                case SearchType.Production:
+                    if (criteria.CreatedAfterDate.HasValue)
+                        builder.Append($" AND CreatedOn >= '{criteria.CreatedAfterDate.Value}'");
+                    if (criteria.CreatedBeforeDate.HasValue)
+                        builder.Append($" AND CreatedOn <= '{criteria.CreatedBeforeDate.Value}'");
+                    break;
+                case SearchType.Consumption:
+                    builder.Append(" AND ConsumedOn is not null");
+                    if (criteria.CreatedAfterDate.HasValue)
+                        builder.Append($" AND ConsumedOn >= '{criteria.CreatedAfterDate.Value}'");
+                    if (criteria.CreatedBeforeDate.HasValue)
+                        builder.Append($" AND ConsumedOn <= '{criteria.CreatedBeforeDate.Value}'");
+                    break;
+            }
+            return builder.ToString();
         }
     }
 }

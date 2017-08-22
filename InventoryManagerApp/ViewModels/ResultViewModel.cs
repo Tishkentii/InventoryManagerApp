@@ -21,25 +21,25 @@ namespace InventoryManagerApp.ViewModels
             _searchCriteria = new SearchCriteria()
             {
                 Width = 200,
-                Thickness = 0.70,
+                Thickness = 70,
                 SearchType = SearchType.Stock
             };
             Summary = new List<RollSummary>()
             {
-                new RollSummary(10, 200, 0.07, 100.12, 4381, DateTime.Now, DateTime.Now),
-                new RollSummary(12, 100, 0.07, 70.12, 481, DateTime.Now, DateTime.Now),
-                new RollSummary(30, 400, 0.12, 100.12, 4381, DateTime.Now, DateTime.Now),
-                new RollSummary(9, 220, 0.09, 700.12, 1381, DateTime.Now, DateTime.Now),
-                new RollSummary(5, 440, 0.12, 120.12, 3381, DateTime.Now, DateTime.Now),
+                new RollSummary(10, 200, 7, 100.12, 4381, DateTime.Now, DateTime.Now),
+                new RollSummary(12, 100, 7, 70.12, 481, DateTime.Now, DateTime.Now),
+                new RollSummary(30, 400, 12, 100.12, 4381, DateTime.Now, DateTime.Now),
+                new RollSummary(9, 220, 9, 700.12, 1381, DateTime.Now, DateTime.Now),
+                new RollSummary(5, 440, 12, 120.12, 3381, DateTime.Now, DateTime.Now),
             };
             Rolls = new List<Roll> { new Roll(1), new Roll(2), new Roll(3) };
         }
 
-        public ResultViewModel(RollService rollService, SearchCriteria criteria)
+        public ResultViewModel(RollService rollService, SearchCriteria criteria, IEnumerable<RollSummary> summary)
         {
             _rollService = rollService;
             _searchCriteria = criteria;
-            Summary = _rollService.GetRollsSummaryAccordingToCriteria(criteria);
+            Summary = summary;
         }
 
         #region Properties
@@ -48,11 +48,7 @@ namespace InventoryManagerApp.ViewModels
         public SearchCriteria SearchCriteria
         {
             get => _searchCriteria;
-            set
-            {
-                _searchCriteria = value;
-                RaisePropertyChanged(nameof(SearchCriteria));
-            }
+            set => Set(ref _searchCriteria, value);
         }
 
         public IEnumerable<RollSummary> Summary
@@ -72,22 +68,14 @@ namespace InventoryManagerApp.ViewModels
         public IEnumerable<Roll> Rolls
         {
             get => _rolls;
-            set
-            {
-                _rolls = value;
-                RaisePropertyChanged(nameof(Rolls));
-            }
+            set => Set(ref _rolls, value);
         }
 
         bool _detailsVisible;
         public bool DetailsVisible
         {
             get => _detailsVisible;
-            set
-            {
-                _detailsVisible = value;
-                RaisePropertyChanged(nameof(DetailsVisible));
-            }
+            set => Set(ref _detailsVisible, value);
         }
 
         #endregion

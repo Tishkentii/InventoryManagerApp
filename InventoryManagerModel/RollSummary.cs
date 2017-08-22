@@ -9,7 +9,7 @@ namespace InventoryManagerModel
 {
     public class RollSummary
     {
-        public RollSummary(int rollCount, double width, double thickness, double totalLength, double totalWeight, DateTime lastDateCreated, DateTime firstDateCreated)
+        public RollSummary(int rollCount, int width, int thickness, double totalLength, double totalWeight, DateTime lastDateCreated, DateTime firstDateCreated)
         {
             RollCount = rollCount > 0 ? rollCount : throw new ArgumentException("rollCount");
             Width = width > 0 ? width : throw new ArgumentException("width");
@@ -30,9 +30,9 @@ namespace InventoryManagerModel
 
         public int RollCount { get; private set; }
 
-        public double Width { get; private set; }
+        public int Width { get; private set; }
 
-        public double Thickness { get; private set; }
+        public int Thickness { get; private set; }
 
         public double TotalLength { get; private set; }
 

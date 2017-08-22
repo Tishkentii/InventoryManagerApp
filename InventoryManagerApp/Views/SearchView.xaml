@@ -46,15 +46,13 @@
                         IsChecked="{Binding Criteria.SearchType, Mode=TwoWay, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Consumption}"/>
             </StackPanel>
 
-
-
             <TextBlock Grid.Row="1" Text="Width" VerticalAlignment="Center"/>
             <TextBox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" TabIndex="1" Height="20" VerticalContentAlignment="Center"
-                     Text="{Binding Criteria.Width}" />
+                     Text="{Binding Criteria.Width, TargetNullValue=''}" />
 
             <TextBlock Grid.Row="2" Text="Thickness" VerticalAlignment="Center"/>
             <TextBox Grid.Row="2" Grid.Column="1"  HorizontalAlignment="Stretch" VerticalAlignment="Center" TabIndex="2" Height="20" VerticalContentAlignment="Center"
-                     Text="{Binding Criteria.Thickness}"/>
+                     Text="{Binding Criteria.Thickness, TargetNullValue=''}"/>
 
             <TextBlock Grid.Row="3" Text="Roll type" VerticalAlignment="Center"/>
             <StackPanel Grid.Row="3" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center">

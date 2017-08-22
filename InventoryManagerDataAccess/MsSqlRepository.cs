@@ -17,10 +17,10 @@ namespace InventoryManagerDataAccess
             this.connectionString = connectionString;
         }
 
-        public DataTable ExecuteQuery(string query)
+        public DataTable ExecuteQuery(string queryString)
         {
             using (var connection = new SqlConnection(connectionString))
-            using (var adapter = new SqlDataAdapter(query, connection))
+            using (var adapter = new SqlDataAdapter(queryString, connection))
             {
                 connection.Open();
                 var table = new DataTable();
@@ -29,17 +29,27 @@ namespace InventoryManagerDataAccess
             }
         }
 
-        public void ExecuteNonQuery(string commandString)
+        public async Task<object> ExecuteScalarAsync(string queryString)
+        {
+            using (var connection = new SqlConnection(connectionString))
+            using (var command = new SqlCommand(queryString, connection))
+            {
+                connection.Open();
+                return await command.ExecuteScalarAsync();
+            }
+        }
+
+        public async Task ExecuteNonQueryAsync(string commandString)
         {
             using (var connection = new SqlConnection(connectionString))
             using (var command = new SqlCommand(commandString, connection))
             {
                 connection.Open();
-                command.ExecuteNonQuery();
+                await command.ExecuteNonQueryAsync();
             }
         }
 
-        public void BulkCopyData(string destinationTableName, DataTable data, Dictionary<string, string> mappings)
+        public async Task BulkCopyDataAsync(string destinationTableName, DataTable data, Dictionary<string, string> mappings)
         {
             using (var connection = new SqlConnection(connectionString))
             using (var bulkCopy = new SqlBulkCopy(connection))
@@ -51,7 +61,7 @@ namespace InventoryManagerDataAccess
                 }
                 connection.Open();
                 bulkCopy.DestinationTableName = destinationTableName; // Rolls
-                bulkCopy.WriteToServer(data);
+                await bulkCopy.WriteToServerAsync(data);
             }
         }
     }
