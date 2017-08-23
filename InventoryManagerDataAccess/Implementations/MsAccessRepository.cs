@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace InventoryManagerDataAccess
 {
-    public class MsAccessRepository
+    public class MsAccessRepository : IDbRepository
     {
         readonly string connectionString;
 
@@ -27,6 +27,21 @@ namespace InventoryManagerDataAccess
                 adapter.Fill(table);
                 return table;
             }
+        }
+
+        public Task ExecuteNonQueryAsync(string commandString)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<object> ExecuteScalarAsync(string queryString)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task BulkCopyDataAsync(string destinationTableName, DataTable data, Dictionary<string, string> mappings)
+        {
+            throw new NotImplementedException();
         }
     }
 }

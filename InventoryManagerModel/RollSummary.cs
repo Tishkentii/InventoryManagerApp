@@ -25,7 +25,13 @@ namespace InventoryManagerModel
 
         public RollSummary(DataRow row)
         {
-
+            RollCount = Convert.ToInt32(row["RollCount"]);
+            Width = Convert.ToInt32(row["Width"]);
+            Thickness = Convert.ToInt32(row["Thickness"]);
+            TotalLength = Convert.ToDouble(row["TotalLength"]);
+            TotalWeight = Convert.ToDouble(row["TotalWeight"]);
+            LastDateCreated = Convert.ToDateTime(row["LastDateCreated"]);
+            FirstDateCreated = Convert.ToDateTime(row["FirstDateCreated"]);
         }
 
         public int RollCount { get; private set; }
@@ -41,5 +47,25 @@ namespace InventoryManagerModel
         public DateTime LastDateCreated { get; private set; }
 
         public DateTime FirstDateCreated { get; private set; }
+
+        #region Overrides
+
+        public override bool Equals(object obj)
+        {
+            return RollCount == ((RollSummary)obj).RollCount &&
+                   Width == ((RollSummary)obj).Width &&
+                   Thickness == ((RollSummary)obj).Thickness &&
+                   TotalLength == ((RollSummary)obj).TotalLength &&
+                   TotalWeight == ((RollSummary)obj).TotalWeight &&
+                   LastDateCreated == ((RollSummary)obj).LastDateCreated &&
+                   FirstDateCreated == ((RollSummary)obj).FirstDateCreated;
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
+        #endregion
     }
 }

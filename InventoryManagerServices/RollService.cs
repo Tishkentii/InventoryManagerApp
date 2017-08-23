@@ -11,10 +11,10 @@ namespace InventoryManagerServices
 {
     public class RollService
     {
-        readonly MsSqlRepository _sqlRepository;
-        readonly MsAccessRepository _accessRepository;
+        readonly IDbRepository _sqlRepository;
+        readonly IDbRepository _accessRepository;
 
-        public RollService(MsSqlRepository sqlRepository, MsAccessRepository accessRepository)
+        public RollService(IDbRepository sqlRepository, IDbRepository accessRepository)
         {
             _sqlRepository = sqlRepository;
             _accessRepository = accessRepository;
@@ -31,11 +31,15 @@ namespace InventoryManagerServices
         {
             var rollSummaryRawData = await Task.Run(() => _sqlRepository.ExecuteQuery(CommandStringHelper.GetRollSummaryCommandString(criteria)));
             var list = new List<RollSummary>();
-            Parallel.ForEach(rollSummaryRawData.AsEnumerable(), (rawData =>
+            foreach (DataRow row in rollSummaryRawData.Rows)
             {
-                lock (list)
-                    list.Add(new RollSummary(rawData));
-            }));
+                list.Add(new RollSummary(row));
+            }
+            //Parallel.ForEach(rollSummaryRawData.AsEnumerable(), (rawData =>
+            //{
+            //    lock (list)
+            //        list.Add(new RollSummary(rawData));
+            //}));
             return list;
         }
 

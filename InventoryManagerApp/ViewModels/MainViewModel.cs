@@ -20,7 +20,6 @@ namespace InventoryManagerApp.ViewModels
         public MainViewModel()
         {
             _rollService = new RollService(new MsSqlRepository("test"), new MsAccessRepository("test"));
-            //SearchVM = new SearchViewModel();
 
             MessengerInstance.Register<SearchCriteria>(this, PerformSearch);
         }

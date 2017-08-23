@@ -50,14 +50,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ServicesTests\CommandStringHelperData.cs" />
+    <Compile Include="ServicesTests\TestData\CommandStringHelperData.cs" />
     <Compile Include="ServicesTests\CommandStringHelperTests.cs" />
     <Compile Include="ServicesTests\RollServiceTests.cs" />
+    <Compile Include="ServicesTests\TestData\RollServiceData.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\InventoryManagerDataAccess\InventoryManagerDataAccess.csproj">
+      <Project>{164A9F52-8D72-47AB-BBE6-C63395FFBE4D}</Project>
+      <Name>InventoryManagerDataAccess</Name>
+    </ProjectReference>
     <ProjectReference Include="..\InventoryManagerModel\InventoryManagerModel.csproj">
       <Project>{FF30B7C2-6CB8-47D3-8C44-F03EA7CEFB29}</Project>
       <Name>InventoryManagerModel</Name>

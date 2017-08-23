@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace InventoryManagerDataAccess
 {
-    public class MsSqlRepository
+    public class MsSqlRepository : IDbRepository
     {
         readonly string connectionString;
 

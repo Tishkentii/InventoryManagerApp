@@ -40,8 +40,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MsAccessRepository.cs" />
-    <Compile Include="MsSqlRepository.cs" />
+    <Compile Include="IDbRepository.cs" />
+    <Compile Include="Implementations\MsAccessRepository.cs" />
+    <Compile Include="Implementations\MsSqlRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
