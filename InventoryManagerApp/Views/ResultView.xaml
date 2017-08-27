@@ -7,7 +7,8 @@
              xmlns:vm="clr-namespace:InventoryManagerApp.ViewModels"
              mc:Ignorable="d" 
              d:DesignHeight="500" d:DesignWidth="725"
-             d:DataContext="{d:DesignInstance vm:ResultViewModel, IsDesignTimeCreatable=True}">
+             d:DataContext="{d:DesignInstance vm:ResultViewModel, IsDesignTimeCreatable=True}"
+             KeyDown="UserControl_KeyDown">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -51,16 +52,24 @@
         </StackPanel>
 
         <DataGrid Grid.Row="1" Background="LightGray" Margin="10" RowBackground="#FFF7F7F7" AlternatingRowBackground="LightGray" SelectionMode="Single" IsReadOnly="True" AutoGenerateColumns="False" HeadersVisibility="Column"
-                  ItemsSource="{Binding Summary}" SelectedItem="{Binding SelectedSummary}" BorderThickness="0" GridLinesVisibility="None"
+                  ItemsSource="{Binding Summaries}" SelectedItem="{Binding SelectedSummary}" BorderThickness="0" GridLinesVisibility="None"
                   CellStyle="{StaticResource DataGridCellStyle}">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Width" Binding="{Binding Width}" Width="70" HeaderStyle="{StaticResource ColumnHeaderStyle1}"/>
-                <DataGridTextColumn Header="Thickness" Binding="{Binding Thickness}" Width="70" HeaderStyle="{StaticResource ColumnHeaderStyle2}"/>
-                <DataGridTextColumn Header="Roll count" Binding="{Binding RollCount}" Width="70" HeaderStyle="{StaticResource ColumnHeaderStyle1}"/>
-                <DataGridTextColumn Header="Total length" Binding="{Binding TotalLength}" Width="80" HeaderStyle="{StaticResource ColumnHeaderStyle2}"/>
-                <DataGridTextColumn Header="Total weight" Binding="{Binding TotalWeight}" Width="80" HeaderStyle="{StaticResource ColumnHeaderStyle1}"/>
-                <DataGridTextColumn Header="First created" Binding="{Binding FirstDateCreated}" Width="*" HeaderStyle="{StaticResource ColumnHeaderStyle2}"/>
-                <DataGridTextColumn Header="Last crated" Binding="{Binding LastDateCreated}" Width="*" HeaderStyle="{StaticResource ColumnHeaderStyle1}"/>
+                <DataGridTextColumn Header="Roll count" Binding="{Binding RollCount}" Width="70" 
+                                    HeaderStyle="{StaticResource ColumnHeaderStyle1}"/>
+                <DataGridTextColumn Header="Width" Binding="{Binding Width}" Width="70" 
+                                    HeaderStyle="{StaticResource ColumnHeaderStyle1}"/>
+                <DataGridTextColumn Header="Thickness" Binding="{Binding Thickness}" Width="70" 
+                                    HeaderStyle="{StaticResource ColumnHeaderStyle2}"/>
+                
+                <DataGridTextColumn Header="Total length" Binding="{Binding TotalLength}" Width="80" 
+                                    HeaderStyle="{StaticResource ColumnHeaderStyle2}"/>
+                <DataGridTextColumn Header="Total weight" Binding="{Binding TotalWeight}" Width="80" 
+                                    HeaderStyle="{StaticResource ColumnHeaderStyle1}"/>
+                <DataGridTextColumn Header="First created" Binding="{Binding FirstDateCreated, StringFormat=\{0:dd.MM.yyyy\}}" 
+                                    HeaderStyle="{StaticResource ColumnHeaderStyle2}" Width="*" />
+                <DataGridTextColumn Header="Last crated" Binding="{Binding LastDateCreated, StringFormat=\{0:dd.MM.yyyy\}}" 
+                                    HeaderStyle="{StaticResource ColumnHeaderStyle1}" Width="*" />
             </DataGrid.Columns>
             <DataGrid.InputBindings>
                 <MouseBinding Gesture="LeftDoubleClick" Command="{Binding ShowDetailsCommand}"/>
@@ -93,17 +102,31 @@
                         <RowDefinition Height="40"/>
                     </Grid.RowDefinitions>
 
-                    <Label Content="Details" VerticalAlignment="Center" Margin="10,0"/>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Details for Width = " FontWeight="DemiBold" VerticalAlignment="Center" Margin="10,0,5,0"/>
+                        <TextBlock Text="{Binding SelectedSummary.Width}" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                        <TextBlock Text="Thickness = " FontWeight="DemiBold" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                        <TextBlock Text="{Binding SelectedSummary.Thickness}" VerticalAlignment="Center" Margin="0,0,5,0"/>
+
+                    </StackPanel>
                     <DataGrid Grid.Row="1" ItemsSource="{Binding Rolls}" Margin="10" RowBackground="#FFF7F7F7" AlternatingRowBackground="LightGray" SelectionMode="Single" IsReadOnly="True" HeadersVisibility="Column"
                               CellStyle="{StaticResource DataGridCellStyle}" AutoGenerateColumns="False"  BorderThickness="0" GridLinesVisibility="None">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="ID" Binding="{Binding ID}" Width="70" HeaderStyle="{StaticResource ColumnHeaderStyle1}"/>
-                            <DataGridTextColumn Header="Length" Binding="{Binding Length}" Width="*" HeaderStyle="{StaticResource ColumnHeaderStyle2}"/>
-                            <DataGridTextColumn Header="Weight" Binding="{Binding Weight}" Width="*" HeaderStyle="{StaticResource ColumnHeaderStyle1}"/>
-                            <DataGridTextColumn Header="Produced by" Binding="{Binding ProducedBy}" Width="*" HeaderStyle="{StaticResource ColumnHeaderStyle2}"/>
-                            <DataGridTextColumn Header="Created on" Binding="{Binding CreatedOn}" Width="*" HeaderStyle="{StaticResource ColumnHeaderStyle1}"/>
-                            <DataGridTextColumn Header="Consumed on" Binding="{Binding ConsumedOn}" Width="*" HeaderStyle="{StaticResource ColumnHeaderStyle1}"/>
-                            <DataGridTextColumn Header="Comment" Binding="{Binding Comment}" Width="*" HeaderStyle="{StaticResource ColumnHeaderStyle2}"/>
+                            <DataGridTextColumn Header="ID" Binding="{Binding ID}" Width="70" 
+                                                HeaderStyle="{StaticResource ColumnHeaderStyle1}"/>
+                            <DataGridTextColumn Header="Length" Binding="{Binding Length}" Width="60"
+                                                HeaderStyle="{StaticResource ColumnHeaderStyle2}"/>
+                            <DataGridTextColumn Header="Weight" Binding="{Binding Weight}" Width="60" 
+                                                HeaderStyle="{StaticResource ColumnHeaderStyle1}"/>
+                            <DataGridTextColumn Header="Produced by" Binding="{Binding ProducedBy}" Width="100" 
+                                                HeaderStyle="{StaticResource ColumnHeaderStyle2}"/>
+                            <DataGridTextColumn Header="Created on" Binding="{Binding CreatedOn, StringFormat=\{0:dd.MM.yyyy\}}" Width="90" 
+                                                HeaderStyle="{StaticResource ColumnHeaderStyle1}"/>
+                            <!--<DataGridTextColumn Header="Consumed on" Binding="{Binding ConsumedOn}" Width="*" 
+                                                HeaderStyle="{StaticResource ColumnHeaderStyle1}"
+                                                Visibility="{Binding SearchCriteria.SearchType, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Consumption}"/>-->
+                            <DataGridTextColumn Header="Comment" Binding="{Binding Comment}" Width="*" 
+                                                HeaderStyle="{StaticResource ColumnHeaderStyle2}"/>
                         </DataGrid.Columns>
                     </DataGrid>
                     <Button Grid.Row="2" Content="OK" Command="{Binding HideDetailsCommand}" Margin="10,5" Width="100"/>

@@ -25,6 +25,8 @@ namespace InventoryManagerApp.ViewModels
             set;
         }
 
+        public bool DatesVisible => Criteria.SearchType != SearchType.Stock;
+
         #endregion
 
         #region Commands

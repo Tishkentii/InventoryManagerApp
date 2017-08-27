@@ -6,74 +6,91 @@
         xmlns:local="clr-namespace:InventoryManagerApp"
         xmlns:vm="clr-namespace:InventoryManagerApp.ViewModels"
         mc:Ignorable="d"
-        Title="MainWindow" Height="550" Width="825"
-        d:DataContext="{d:DesignInstance vm:MainViewModel, IsDesignTimeCreatable=True}">
+        Height="550" Width="825"
+        d:DataContext="{d:DesignInstance vm:MainViewModel, IsDesignTimeCreatable=True}"
+        WindowStyle="None"
+        MaxWidth="{Binding Source={x:Static SystemParameters.WorkArea}, Path=Width}"
+        MaxHeight="{Binding Source={x:Static SystemParameters.WorkArea}, Path=Height}"
+        AllowsTransparency="True" ResizeMode="CanResizeWithGrip"
+        BorderBrush="#FF1D6AB8" BorderThickness="3">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="../Resources.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
+            <Style x:Key="gridStyleMouseOver" TargetType="Grid">
+                <Setter Property="Background" Value="{StaticResource ApplicationBrush}"/>
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="Background" Value="Red"/>
+                    </Trigger>
+                    <DataTrigger Binding="{Binding Path=IsActive,RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}" Value="False">
+                        <Setter Property="Background" Value="Red"/>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+
+         
         </ResourceDictionary>
     </Window.Resources>
-    
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="30"/>
-            <ColumnDefinition Width="auto"/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
 
-        <StackPanel Name="panel" Background="LightGray">
-            <Button Command="{Binding ShowSearchCommand}" Background="LightGray" BorderThickness="0" Margin="2">
-                <Image Source="/InventoryManagerApp;component/Assets/search.png" Margin="4" RenderOptions.BitmapScalingMode="HighQuality"/>
-            </Button>
-        </StackPanel>
+    <DockPanel x:Name="RootWindow">
+        <Border DockPanel.Dock="Top" Background="#FF1D6AB8" MouseDown="TitleBar_MouseDown" Height="27" Padding="0,0,0,2">
+            <DockPanel x:Name="TitleBar">
+                <Button x:Name="CloseButton" DockPanel.Dock="Right" Click="CloseButton_Click" Background="Transparent" Width="25"  BorderThickness="0">
+                </Button>
+                <Button x:Name="MaxButton" DockPanel.Dock="Right" Click="MaxButton_Click" Background="Transparent" Width="25"  BorderThickness="0">
+                </Button>
+                <Button x:Name="MinButton" DockPanel.Dock="Right" Click="MinButton_Click" Background="Transparent" Width="25" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" BorderThickness="0">
+                </Button>
 
-        <Border Grid.Column="2">
-            <Border.Style>
-                <Style TargetType="{x:Type Border}">
-                    <Setter Property="Visibility" Value="Collapsed"/>
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding ResultVM, Converter={StaticResource NullToVisibilityConverter}}" Value="Visible">
-                            <DataTrigger.EnterActions>
-                                <BeginStoryboard Storyboard="{StaticResource FadeIn}"/>
-                            </DataTrigger.EnterActions>
-                            <DataTrigger.ExitActions>
-                                <BeginStoryboard Storyboard="{StaticResource FadeOut}"/>
-                            </DataTrigger.ExitActions>
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </Border.Style>
-
-            <ContentControl  Content="{Binding ResultVM}"/>
+                <TextBlock Text="Tonevi Inventory Manager" Foreground="White" FontWeight="DemiBold" FontSize="12" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="35,0"/>
+            </DockPanel>
         </Border>
 
-        <Grid Grid.Column="1">
-            <Grid.Style>
-                <Style TargetType="{x:Type Grid}">
-                    <Setter Property="Visibility" Value="Collapsed"/>
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding SearchVM, Converter={StaticResource NullToVisibilityConverter}}" Value="Visible">
-                            <DataTrigger.EnterActions>
-                                <BeginStoryboard Storyboard="{StaticResource FadeIn}"/>
-                            </DataTrigger.EnterActions>
-                            <DataTrigger.ExitActions>
-                                <BeginStoryboard Storyboard="{StaticResource FadeOut}"/>
-                            </DataTrigger.ExitActions>
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </Grid.Style>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="30"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
 
-            <Border Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="LightGray" Opacity="0.6"/>
-            <Border Grid.Row="1" >
+            <DockPanel Name="panel" Background="{DynamicResource ApplicationBrush}">
+                <Button Command="{Binding ShowSearchCommand}" Background="Transparent" BorderThickness="0" Margin="2" DockPanel.Dock="Top" VerticalAlignment="Top">
+                    <Image Source="/InventoryManagerApp;component/Assets/search.png" Margin="4" RenderOptions.BitmapScalingMode="HighQuality"/>
+                </Button>
+
+                <Button Background="Transparent" BorderThickness="0" Margin="2" DockPanel.Dock="Bottom" VerticalAlignment="Bottom">
+                    <Image Source="/InventoryManagerApp;component/Assets/settings.png" Margin="2" RenderOptions.BitmapScalingMode="HighQuality"/>
+                </Button>
+                <Button Command="{Binding SynchronizeDatabasesCommand}" Background="Transparent" BorderThickness="0" Margin="2" DockPanel.Dock="Bottom" VerticalAlignment="Bottom">
+                    <Image Source="/InventoryManagerApp;component/Assets/synchronize.png" Margin="2" RenderOptions.BitmapScalingMode="HighQuality"/>
+                </Button>
+            </DockPanel>
+
+            <Border Grid.Column="2" HorizontalAlignment="Right">
+                <ContentControl  Content="{Binding ResultVM}" HorizontalAlignment="Right"/>
+            </Border>
+
+            <Border  Grid.Column="1" HorizontalAlignment="Left">
+                <Border.Style>
+                    <Style TargetType="Border">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding SearchVisible}" Value="True">
+                                <DataTrigger.EnterActions>
+                                    <BeginStoryboard Storyboard="{StaticResource ShowSearchPanelScrolltoryboard}"/>
+                                </DataTrigger.EnterActions>
+                                <DataTrigger.ExitActions>
+                                    <BeginStoryboard Storyboard="{StaticResource HideSearchPanelScrolltoryboard}"/>
+                                </DataTrigger.ExitActions>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Border.Style>
                 <ContentControl  Content="{Binding SearchVM}" Width="200" HorizontalAlignment="Left"/>
             </Border>
         </Grid>
-        
-       
-
-    </Grid>
+    </DockPanel>
+   
 </Window>

@@ -27,6 +27,52 @@ namespace InventoryManagerApp.Views
             InitializeComponent();
             DataContext = new MainViewModel();
         }
+
+        private void TitleBar_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+                if (e.ClickCount == 2)
+                {
+                    AdjustWindowSize();
+                }
+                else
+                {
+                    Application.Current.MainWindow.DragMove();
+                }
+        }
+
+        /// <summary>
+        /// Adjusts the WindowSize to correct parameters when Maximize button is clicked
+        /// </summary>
+        private void AdjustWindowSize()
+        {
+            if (this.WindowState == WindowState.Maximized)
+            {
+                this.WindowState = WindowState.Normal;
+                MaxButton.Content = "1";
+            }
+            else
+            {
+                this.WindowState = WindowState.Maximized;
+                MaxButton.Content = "2";
+            }
+
+        }
+
+        private void CloseButton_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
+
+        private void MaxButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.WindowState = WindowState.Maximized;
+        }
+
+        private void MinButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.WindowState = WindowState.Minimized;
+        }
     }
 
 }

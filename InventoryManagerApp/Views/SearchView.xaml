@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:InventoryManagerApp.Views"
              xmlns:vm="clr-namespace:InventoryManagerApp.ViewModels"
              mc:Ignorable="d" 
-             d:DesignHeight="350" d:DesignWidth="200"
+             d:DesignHeight="350" d:DesignWidth="220"
              d:DataContext="{d:DesignInstance vm:SearchViewModel, IsDesignTimeCreatable=True}">
     <UserControl.Resources>
         <ResourceDictionary>
@@ -17,16 +17,16 @@
         </ResourceDictionary>
     </UserControl.Resources>
     
-    <Grid Background="LightGray">
+    <Grid Background="#FFECECEC">
         <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
+            <RowDefinition Height="205"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="40"/>
         </Grid.RowDefinitions>
 
-        <Grid Margin="5">
+        <Grid Margin="15,15,15,10">
             <Grid.RowDefinitions>
-                <RowDefinition Height="65"/>
+                <RowDefinition Height="55"/>
                 <RowDefinition Height="40"/>
                 <RowDefinition Height="40"/>
                 <RowDefinition Height="40"/>
@@ -38,69 +38,72 @@
 
             <TextBlock Text="Search type"/>
             <StackPanel Grid.Column="1" HorizontalAlignment="Stretch">
-                <RadioButton GroupName="SearchTypes" Content="Stock" 
+                <RadioButton GroupName="SearchTypes" Content="Stock" BorderThickness="0"
                         IsChecked="{Binding Criteria.SearchType, Mode=TwoWay, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Stock}" Margin="0,1"/>
-                <RadioButton GroupName="SearchTypes" Content="Production" Margin="0,1"
+                <RadioButton GroupName="SearchTypes" Content="Production" Margin="0,1" BorderThickness="0"
                         IsChecked="{Binding Criteria.SearchType, Mode=TwoWay, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Production}"/>
-                <RadioButton GroupName="SearchTypes" Content="Consumption" Margin="0,1"
+                <RadioButton GroupName="SearchTypes" Content="Consumption" Margin="0,1" BorderThickness="0"
                         IsChecked="{Binding Criteria.SearchType, Mode=TwoWay, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Consumption}"/>
             </StackPanel>
 
             <TextBlock Grid.Row="1" Text="Width" VerticalAlignment="Center"/>
-            <TextBox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" TabIndex="1" Height="20" VerticalContentAlignment="Center"
+            <TextBox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" TabIndex="1" Height="25" VerticalContentAlignment="Center" BorderThickness="0"
                      Text="{Binding Criteria.Width, TargetNullValue=''}" />
 
             <TextBlock Grid.Row="2" Text="Thickness" VerticalAlignment="Center"/>
-            <TextBox Grid.Row="2" Grid.Column="1"  HorizontalAlignment="Stretch" VerticalAlignment="Center" TabIndex="2" Height="20" VerticalContentAlignment="Center"
+            <TextBox Grid.Row="2" Grid.Column="1"  HorizontalAlignment="Stretch" VerticalAlignment="Center" TabIndex="2" Height="25" VerticalContentAlignment="Center" BorderThickness="0"
                      Text="{Binding Criteria.Thickness, TargetNullValue=''}"/>
 
             <TextBlock Grid.Row="3" Text="Roll type" VerticalAlignment="Center"/>
             <StackPanel Grid.Row="3" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center">
-                <RadioButton GroupName="RollTypes" Content="Tube" Margin="0,1"
+                <RadioButton GroupName="RollTypes" Content="Tube" Margin="0,1" BorderThickness="0"
                               IsChecked="{Binding Criteria.RollType, Mode=TwoWay, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Tube}"/>
-                <RadioButton GroupName="RollTypes" Content="Film" Margin="0,1"
+                <RadioButton GroupName="RollTypes" Content="Film" Margin="0,1" BorderThickness="0"
                               IsChecked="{Binding Criteria.RollType, Mode=TwoWay, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Film}"/>
             </StackPanel>
         </Grid>
-       
-        <Grid Grid.Row="1" Margin="5">
-            <Grid.Style>
-                <Style TargetType="{x:Type Grid}">
-                    <Setter Property="Visibility" Value="Collapsed"/>
+
+        <Border Grid.Row="1" Margin="15,5,10,5">
+            <Border.Style>
+                <Style TargetType="Border">
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding Criteria.SearchType, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Stock}" Value="False">
                             <DataTrigger.EnterActions>
-                                <BeginStoryboard Storyboard="{StaticResource FadeIn}"/>
+                                <BeginStoryboard Storyboard="{StaticResource ShowSearchDatesStoryboard}"/>
                             </DataTrigger.EnterActions>
                             <DataTrigger.ExitActions>
-                                <BeginStoryboard Storyboard="{StaticResource FadeOut}"/>
+                                <BeginStoryboard Storyboard="{StaticResource HideSearchDatesStoryboard}"/>
                             </DataTrigger.ExitActions>
-                            <Setter Property="Visibility" Value="Visible"/>
+                            <Setter Property="Height" Value="100"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Criteria.SearchType, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Stock}" Value="True">
+                            <Setter Property="Height" Value="0"/>
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
-            </Grid.Style>
+            </Border.Style>
+            <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="40"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="90"/>
+                </Grid.ColumnDefinitions>
 
-            <Grid.RowDefinitions>
-                <RowDefinition Height="40"/>
-                <RowDefinition Height="40"/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-                <ColumnDefinition Width="90"/>
-            </Grid.ColumnDefinitions>
-            
-         
-            <TextBlock Text="From" VerticalAlignment="Center"/>
-            <DatePicker Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" FirstDayOfWeek="Monday" BorderThickness="0" Padding="0"
+                <TextBlock Text="From" VerticalAlignment="Center"/>
+                <DatePicker Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" FirstDayOfWeek="Monday" BorderThickness="0" Padding="0"
                         SelectedDate="{Binding Criteria.CreatedAfterDate}"/>
 
-            <TextBlock Grid.Row="1" Text="To" VerticalAlignment="Center"/>
-            <DatePicker Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" FirstDayOfWeek="Monday" BorderThickness="0" Padding="0"
+                <TextBlock Grid.Row="1" Text="To" VerticalAlignment="Center"/>
+                <DatePicker Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" FirstDayOfWeek="Monday" BorderThickness="0" Padding="0"
                         SelectedDate="{Binding Criteria.CreatedBeforeDate}" />
-        </Grid>
+            </Grid>
+        </Border>
+       
 
-        <Button Grid.Row="2" Command="{Binding SearchCommand}" Content="Search" Margin="5,10" Background="White"/>
+        <Button Grid.Row="2" Command="{Binding SearchCommand}" Content="Search" Margin="15,10" Background="White" BorderThickness="0"/>
 
 
     </Grid>

@@ -9,6 +9,8 @@
     <conv:EnumMatchToBooleanConverter x:Key="EnumToBoolConverter"/>
     <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
 
+    <SolidColorBrush x:Key="ApplicationBrush" Color="#FF438CD6"/>
+
     <DataTemplate DataType="{x:Type vm:SearchViewModel}">
         <v:SearchView/>
     </DataTemplate>
@@ -18,15 +20,34 @@
     </DataTemplate>
 
     <!--Storyboards-->
+    <Storyboard x:Key="ShowSearchDatesStoryboard">
+        <DoubleAnimation Storyboard.TargetProperty="Height" From="0" To="100" Duration="0:0:0.15" AutoReverse="False"/>
+    </Storyboard>
+
+    <Storyboard x:Key="HideSearchDatesStoryboard">
+        <DoubleAnimation Storyboard.TargetProperty="Height" From="100" To="0" Duration="0:0:0.15" AutoReverse="False"/>
+    </Storyboard>
+
+    <Storyboard x:Key="ShowSearchPanelScrolltoryboard">
+        <DoubleAnimation Storyboard.TargetProperty="Width" From="0" To="200" Duration="0:0:0.15" AutoReverse="False"/>
+        <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0.0" To="1.0" Duration="0:0:0.15" Storyboard.TargetName="{x:Null}"/>
+
+    </Storyboard>
+
+    <Storyboard x:Key="HideSearchPanelScrolltoryboard">
+        <DoubleAnimation Storyboard.TargetProperty="Width" From="200" To="0" Duration="0:0:0.15" AutoReverse="False"/>
+        <DoubleAnimation Storyboard.TargetProperty="Opacity" From="1.0" To="0.0" Duration="0:0:0.15" Storyboard.TargetName="{x:Null}"/>
+    </Storyboard>
+
     <Storyboard x:Key="FadeIn">
-        <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0.0" To="1.0" Duration="0:0:0.35" Storyboard.TargetName="{x:Null}"/>
+        <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0.0" To="1.0" Duration="0:0:0.3" Storyboard.TargetName="{x:Null}"/>
         <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility" Storyboard.TargetName="{x:Null}">
             <DiscreteObjectKeyFrame KeyTime="0:0:0.0" Value="{x:Static Visibility.Visible}"/>
         </ObjectAnimationUsingKeyFrames>
     </Storyboard>
 
     <Storyboard x:Key="FadeOut">
-        <DoubleAnimation Storyboard.TargetProperty="Opacity" From="1.0" To="0.0" Duration="0:0:0.35" Storyboard.TargetName="{x:Null}"/>
+        <DoubleAnimation Storyboard.TargetProperty="Opacity" From="1.0" To="0.0" Duration="0:0:0.3" Storyboard.TargetName="{x:Null}"/>
         <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility" Storyboard.TargetName="{x:Null}">
             <DiscreteObjectKeyFrame KeyTime="0:0:0.0" Value="{x:Static Visibility.Visible}"/>
             <DiscreteObjectKeyFrame KeyTime="0:0:0.35" Value="{x:Static Visibility.Collapsed}"/>

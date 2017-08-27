@@ -9,9 +9,9 @@ namespace InventoryManagerModel
 {
     public class RollSummary
     {
-        public RollSummary(int rollCount, int width, int thickness, double totalLength, double totalWeight, DateTime lastDateCreated, DateTime firstDateCreated)
+        public RollSummary(RollType type, int rollCount, int width, int thickness, double totalLength, double totalWeight, DateTime lastDateCreated, DateTime firstDateCreated)
         {
-            RollCount = rollCount > 0 ? rollCount : throw new ArgumentException("rollCount");
+            RollCount = rollCount >= 0 ? rollCount : throw new ArgumentException("rollCount");
             Width = width > 0 ? width : throw new ArgumentException("width");
             Thickness = thickness > 0 ? thickness : throw new ArgumentException("thickness");
             TotalLength = totalLength >= 0 ? totalLength : throw new ArgumentException("total length");
@@ -25,6 +25,7 @@ namespace InventoryManagerModel
 
         public RollSummary(DataRow row)
         {
+            Type = row["RollType"].ToString() == "O" ? RollType.Tube : RollType.Film;
             RollCount = Convert.ToInt32(row["RollCount"]);
             Width = Convert.ToInt32(row["Width"]);
             Thickness = Convert.ToInt32(row["Thickness"]);
@@ -33,6 +34,8 @@ namespace InventoryManagerModel
             LastDateCreated = Convert.ToDateTime(row["LastDateCreated"]);
             FirstDateCreated = Convert.ToDateTime(row["FirstDateCreated"]);
         }
+
+        public RollType Type { get; private set; }
 
         public int RollCount { get; private set; }
 
@@ -52,13 +55,19 @@ namespace InventoryManagerModel
 
         public override bool Equals(object obj)
         {
-            return RollCount == ((RollSummary)obj).RollCount &&
+            if (obj is RollSummary summary)
+            {
+                return 
+                RollCount == ((RollSummary)obj).RollCount &&
                    Width == ((RollSummary)obj).Width &&
                    Thickness == ((RollSummary)obj).Thickness &&
                    TotalLength == ((RollSummary)obj).TotalLength &&
                    TotalWeight == ((RollSummary)obj).TotalWeight &&
                    LastDateCreated == ((RollSummary)obj).LastDateCreated &&
                    FirstDateCreated == ((RollSummary)obj).FirstDateCreated;
+            }
+            else
+                return base.Equals(obj);
         }
 
         public override int GetHashCode()

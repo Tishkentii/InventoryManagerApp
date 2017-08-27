@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using InventoryManagerApp.ViewModels;
 
 namespace InventoryManagerApp.Views
 {
@@ -23,6 +24,15 @@ namespace InventoryManagerApp.Views
         public ResultView()
         {
             InitializeComponent();
+        }
+
+        private void UserControl_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Escape)
+            {
+                ((ResultViewModel)DataContext).HideDetailsCommand.Execute(null);
+                e.Handled = true;
+            }
         }
     }
 }

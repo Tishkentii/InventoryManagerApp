@@ -44,8 +44,8 @@ namespace InventoryManagerAppTests.ServicesTests.TestData
 
             var summary = new List<RollSummary>
             {
-                new RollSummary(10, 120, 70, 505.65, 43.51, new DateTime(2017, 8, 5), new DateTime(2017, 1, 5)),
-                new RollSummary(12, 100, 90, 515.65, 40.51, new DateTime(2017, 3, 1), new DateTime(2017, 2, 19))
+                new RollSummary(RollType.Tube, 10, 120, 70, 505.65, 43.51, new DateTime(2017, 8, 5), new DateTime(2017, 1, 5)),
+                new RollSummary(RollType.Tube, 12, 100, 90, 515.65, 40.51, new DateTime(2017, 3, 1), new DateTime(2017, 2, 19))
 
             };
 

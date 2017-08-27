@@ -22,7 +22,8 @@ namespace InventoryManagerAppTests.ServicesTests
         public async Task GetRollsSummaryAccordingToCriteria_Always_ReturnsExpected(SearchCriteria input, DataTable tempResult, IEnumerable<RollSummary> expected)
         {
             _mockSqlRepository = new Mock<IDbRepository>(MockBehavior.Strict);
-            _mockSqlRepository.Setup(s => s.ExecuteQuery(CommandStringHelper.GetRollSummaryCommandString(input))).Returns(tempResult);
+            var helper = new CommandStringHelper();
+            _mockSqlRepository.Setup(s => s.ExecuteQuery(helper.GetRollSummaryCommandString(input))).Returns(tempResult);
 
             var sut = new RollService(_mockSqlRepository.Object, _mockSqlRepository.Object);
             var actual = await sut.GetRollsSummaryAccordingToCriteriaAsync(input);

@@ -18,54 +18,44 @@ namespace InventoryManagerApp.ViewModels
 
         public ResultViewModel()
         {
-            _searchCriteria = new SearchCriteria()
+            SearchCriteria = new SearchCriteria()
             {
                 Width = 200,
                 Thickness = 70,
                 SearchType = SearchType.Stock
             };
-            Summary = new List<RollSummary>()
+            Summaries = new List<RollSummary>()
             {
-                new RollSummary(10, 200, 7, 100.12, 4381, DateTime.Now, DateTime.Now),
-                new RollSummary(12, 100, 7, 70.12, 481, DateTime.Now, DateTime.Now),
-                new RollSummary(30, 400, 12, 100.12, 4381, DateTime.Now, DateTime.Now),
-                new RollSummary(9, 220, 9, 700.12, 1381, DateTime.Now, DateTime.Now),
-                new RollSummary(5, 440, 12, 120.12, 3381, DateTime.Now, DateTime.Now),
+                new RollSummary(RollType.Tube,10, 200, 7, 100.12, 4381, DateTime.MaxValue, DateTime.MinValue),
+                new RollSummary(RollType.Tube,12, 100, 7, 70.12, 481, DateTime.MaxValue, DateTime.MinValue),
+                new RollSummary(RollType.Tube,30, 400, 12, 100.12, 4381, DateTime.MaxValue, DateTime.MinValue),
             };
             Rolls = new List<Roll> { new Roll(1), new Roll(2), new Roll(3) };
         }
 
-        public ResultViewModel(RollService rollService, SearchCriteria criteria, IEnumerable<RollSummary> summary)
+        public ResultViewModel(RollService rollService, SearchCriteria criteria, ICollection<RollSummary> summaries)
         {
             _rollService = rollService;
-            _searchCriteria = criteria;
-            Summary = summary;
+            SearchCriteria = criteria;
+            Summaries = summaries;
         }
 
         #region Properties
 
-        SearchCriteria _searchCriteria;
-        public SearchCriteria SearchCriteria
-        {
-            get => _searchCriteria;
-            set => Set(ref _searchCriteria, value);
-        }
+        public SearchCriteria SearchCriteria { get; private set; }
 
-        public IEnumerable<RollSummary> Summary
-        {
-            get;
-            private set;
-        }
+        public ICollection<RollSummary> Summaries { get; private set; }
 
+        RollSummary _selectedSummary;
         public RollSummary SelectedSummary
         {
-            get;
-            set;
+            get => _selectedSummary;
+            set => Set(ref _selectedSummary, value);
         }
 
 
-        IEnumerable<Roll> _rolls;
-        public IEnumerable<Roll> Rolls
+        ICollection<Roll> _rolls;
+        public ICollection<Roll> Rolls
         {
             get => _rolls;
             set => Set(ref _rolls, value);
@@ -84,7 +74,7 @@ namespace InventoryManagerApp.ViewModels
 
         RelayCommand _showDetailsCommand;
         public ICommand ShowDetailsCommand =>
-            _showDetailsCommand ?? (_showDetailsCommand = new RelayCommand(ShowDetails));
+            _showDetailsCommand ?? (_showDetailsCommand = new RelayCommand(async () => await ShowDetails()));
 
         RelayCommand _hideDetailsCommand;
         public ICommand HideDetailsCommand =>
@@ -92,9 +82,9 @@ namespace InventoryManagerApp.ViewModels
 
         #endregion
 
-        public void ShowDetails()
+        public async Task ShowDetails()
         {
-            Rolls = _rollService.GetRollDetailsFromSummary(SelectedSummary);
+            //Rolls = await _rollService.GetRollDetailsFromSummaryAsync(SelectedSummary, SearchCriteria.SearchType);
             DetailsVisible = true;
         }
 

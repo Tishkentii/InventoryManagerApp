@@ -21,7 +21,7 @@ namespace InventoryManagerApp.ViewModels
         {
             _rollService = new RollService(new MsSqlRepository("test"), new MsAccessRepository("test"));
 
-            MessengerInstance.Register<SearchCriteria>(this, PerformSearch);
+            MessengerInstance.Register<SearchCriteria>(this, OnSearch);
         }
 
         #region Binding properties
@@ -40,6 +40,13 @@ namespace InventoryManagerApp.ViewModels
             set => Set(ref _resultViewModel, value);
         }
 
+        bool _searchVisible;
+        public bool SearchVisible
+        {
+            get => _searchVisible;
+            set => Set(ref _searchVisible, value);
+        }
+
         #endregion
 
         #region Commands
@@ -48,19 +55,39 @@ namespace InventoryManagerApp.ViewModels
         public ICommand ShowSearchCommand =>
             _showSearchCommand ?? (_showSearchCommand = new RelayCommand(ShowSearch));
 
+        RelayCommand _synchronizeDatabasesCommand;
+        public ICommand SynchronizeDatabasesCommand =>
+            _synchronizeDatabasesCommand ?? (_synchronizeDatabasesCommand = new RelayCommand(async () => await SynchronizeDatabasesAsync()));
+
         #endregion
 
         public void ShowSearch()
         {
             SearchVM = new SearchViewModel();
+            SearchVisible = true;
             //ResultVM = null;
         }
 
-        public async void PerformSearch(SearchCriteria criteria)
+        public async void OnSearch(SearchCriteria criteria)
         {
             var summary = await _rollService.GetRollsSummaryAccordingToCriteriaAsync(criteria).ConfigureAwait(false);
-            ResultVM = new ResultViewModel(_rollService, criteria, summary);
-            SearchVM = null;
+            //ResultVM = new ResultViewModel(_rollService, criteria, summary);
+            ResultVM = new ResultViewModel();
+            //SearchVM = null;
+            SearchVisible = false;
+        }
+
+        public async Task SynchronizeDatabasesAsync()
+        {
+            try
+            {
+                await _rollService.SynchronizeDatabasesAsync();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"ERROR: {ex.Message}");
+                // TODO Show message box
+            }
         }
     }
 }

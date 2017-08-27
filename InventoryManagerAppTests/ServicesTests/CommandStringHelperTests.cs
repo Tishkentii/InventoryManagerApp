@@ -15,14 +15,16 @@ namespace InventoryManagerAppTests.ServicesTests
         [TestCaseSource(typeof(CommandStringHelperData), "GetRollSummaryCommandString_AlwaysCorrect_TestData")]
         public void GetRollSummaryCommandString_Always_ReturnsExpected(SearchCriteria input, string expected)
         {
-            string actual = CommandStringHelper.GetRollSummaryCommandString(input).ToLower();
+            var sut = new CommandStringHelper();
+            string actual = sut.GetRollSummaryCommandString(input).ToLower();
             Assert.That(actual, Is.EqualTo(expected.ToLower()));
         }
 
         [Test]
         public void GetRollSummaryCommandString_WhenCriteriaNull_ThrowsArgumentNull()
         {
-            Assert.Throws<ArgumentNullException>(() => CommandStringHelper.GetRollSummaryCommandString(null), "criteria");
+            var sut = new CommandStringHelper();
+            Assert.Throws<ArgumentNullException>(() => sut.GetRollSummaryCommandString(null), "criteria");
         }
     }
 }

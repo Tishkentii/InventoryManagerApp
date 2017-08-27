@@ -16,7 +16,14 @@ namespace InventoryManagerModel
 
         public Roll(DataRow rollData)
         {
-            // TODO parse data
+            ID = Convert.ToInt32(rollData["ID"]);
+            Type = rollData["RollType"].ToString() == "O" ? RollType.Tube : RollType.Film;
+            ProducedBy = rollData["Employee"].ToString();
+            Width = Convert.ToInt32(rollData["Width"]);
+            Thickness = Convert.ToInt32(rollData["Thickness"]);
+            CreatedOn = Convert.ToDateTime(rollData["CreatedOn"]);
+            ConsumedOn = Convert.ToDateTime(rollData["ConsumedOn"]);
+            Comment = rollData["Comment"].ToString();
         }
 
         public int ID { get; private set; }
