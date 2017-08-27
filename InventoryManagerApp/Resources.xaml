@@ -9,7 +9,11 @@
     <conv:EnumMatchToBooleanConverter x:Key="EnumToBoolConverter"/>
     <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
 
+    <SolidColorBrush x:Key="TitleBarBrush" Color="#FF0078D7"/>
+    <SolidColorBrush x:Key="TitleBarHighlightBrush" Color="#FF498BCF"/>
     <SolidColorBrush x:Key="ApplicationBrush" Color="#FF438CD6"/>
+    <SolidColorBrush x:Key="HighlightBrush" Color="#FF76ADE4"/>
+    <SolidColorBrush x:Key="AccentBrush" Color="#FFE2E8F3"/>
 
     <DataTemplate DataType="{x:Type vm:SearchViewModel}">
         <v:SearchView/>
@@ -54,17 +58,55 @@
         </ObjectAnimationUsingKeyFrames>
     </Storyboard>
 
+    <!--DataGrid-->
     <Style x:Key="DataGridCellStyle" TargetType="DataGridCell">
-        <Setter Property="Padding" Value="10"/>
+        <Setter Property="Padding" Value="5,15,0,15"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type DataGridCell}">
-                    <Border Padding="{TemplateBinding Padding}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+                    <Border Padding="{TemplateBinding Padding}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="0" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
                         <ContentPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
                     </Border>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+    </Style>
+    
+    <!--Button Styles-->
+    <Style x:Key="TitleBarButtonMouseOverSyle" TargetType="Button">
+        <Setter Property="Background" Value="{StaticResource TitleBarBrush}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border Background="{TemplateBinding Background}">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{StaticResource TitleBarHighlightBrush}"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="NormalButtonMouseOverSyle" TargetType="Button">
+        <Setter Property="Background" Value="{StaticResource ApplicationBrush}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border Background="{TemplateBinding Background}">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{StaticResource HighlightBrush}"/>
+            </Trigger>
+        </Style.Triggers>
     </Style>
 
 </ResourceDictionary>

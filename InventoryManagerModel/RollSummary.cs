@@ -25,7 +25,7 @@ namespace InventoryManagerModel
 
         public RollSummary(DataRow row)
         {
-            Type = row["RollType"].ToString() == "O" ? RollType.Tube : RollType.Film;
+            Type = row["Type"].ToString() == "O" ? RollType.Tube : RollType.Film;
             RollCount = Convert.ToInt32(row["RollCount"]);
             Width = Convert.ToInt32(row["Width"]);
             Thickness = Convert.ToInt32(row["Thickness"]);
@@ -57,7 +57,7 @@ namespace InventoryManagerModel
         {
             if (obj is RollSummary summary)
             {
-                return 
+                return
                 RollCount == ((RollSummary)obj).RollCount &&
                    Width == ((RollSummary)obj).Width &&
                    Thickness == ((RollSummary)obj).Thickness &&

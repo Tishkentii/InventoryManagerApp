@@ -17,6 +17,7 @@ namespace InventoryManagerAppTests.ServicesTests.TestData
 
             var testDataTable = new DataTable();
             testDataTable.Columns.Add("RollCount");
+            testDataTable.Columns.Add("Type");
             testDataTable.Columns.Add("Width");
             testDataTable.Columns.Add("Thickness");
             testDataTable.Columns.Add("TotalLength");
@@ -25,21 +26,23 @@ namespace InventoryManagerAppTests.ServicesTests.TestData
             testDataTable.Columns.Add("FirstDateCreated");
             var row1 = testDataTable.NewRow();
             row1[0] = 10;
-            row1[1] = 120;
-            row1[2] = 70;
-            row1[3] = 505.65;
-            row1[4] = 43.51;
-            row1[5] = new DateTime(2017, 8, 5);
-            row1[6] = new DateTime(2017, 1, 5);
+            row1[1] = RollType.Tube;
+            row1[2] = 120;
+            row1[3] = 70;
+            row1[4] = 505.65;
+            row1[5] = 43.51;
+            row1[6] = new DateTime(2017, 8, 5);
+            row1[7] = new DateTime(2017, 1, 5);
             testDataTable.Rows.Add(row1);
             var row2 = testDataTable.NewRow();
             row2[0] = 12;
-            row2[1] = 100;
-            row2[2] = 90;
-            row2[3] = 515.65;
-            row2[4] = 40.51;
-            row2[5] = new DateTime(2017, 3, 1);
-            row2[6] = new DateTime(2017, 2, 19);
+            row2[1] = RollType.Tube;
+            row2[2] = 100;
+            row2[3] = 90;
+            row2[4] = 515.65;
+            row2[5] = 40.51;
+            row2[6] = new DateTime(2017, 3, 1);
+            row2[7] = new DateTime(2017, 2, 19);
             testDataTable.Rows.Add(row2);
 
             var summary = new List<RollSummary>

@@ -84,7 +84,7 @@ namespace InventoryManagerApp.ViewModels
 
         public async Task ShowDetails()
         {
-            //Rolls = await _rollService.GetRollDetailsFromSummaryAsync(SelectedSummary, SearchCriteria.SearchType);
+            Rolls = await _rollService.GetRollDetailsFromSummaryAsync(SelectedSummary, SearchCriteria.SearchType);
             DetailsVisible = true;
         }
 

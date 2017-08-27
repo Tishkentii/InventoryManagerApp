@@ -49,7 +49,7 @@ namespace InventoryManagerServices
             if (criteria == null)
                 throw new ArgumentNullException("criteria");
 
-            var builder = new StringBuilder($"SELECT * FROM dbo.Rolls WHERE Type = "); // TODO search for all rolls as well
+            var builder = new StringBuilder($"SELECT COUNT(id) AS RollCount, Type, Width, Thickness, sum(Length) AS TotalLength, sum(WeightReal) AS TotalWeight, min(Createdon) AS FirstDateCreated, max(createdon) AS LastDateCreated FROM dbo.Rolls WHERE Type = ");
             builder.Append(criteria.RollType == RollType.Tube ? "'O'" : "'I'");
             if (criteria.Width.HasValue)
                 builder.Append($" AND Width = {criteria.Width.Value}");
@@ -62,18 +62,19 @@ namespace InventoryManagerServices
                     break;
                 case SearchType.Production:
                     if (criteria.CreatedAfterDate.HasValue)
-                        builder.Append($" AND CreatedOn >= '{criteria.CreatedAfterDate.Value}'");
+                        builder.Append($" AND CreatedOn >= '{criteria.CreatedAfterDate.Value.ToString("yyyy-MM-dd")}'");
                     if (criteria.CreatedBeforeDate.HasValue)
-                        builder.Append($" AND CreatedOn <= '{criteria.CreatedBeforeDate.Value}'");
+                        builder.Append($" AND CreatedOn <= '{criteria.CreatedBeforeDate.Value.ToString("yyyy-MM-dd")}'");
                     break;
                 case SearchType.Consumption:
                     builder.Append(" AND ConsumedOn is not null");
                     if (criteria.CreatedAfterDate.HasValue)
-                        builder.Append($" AND ConsumedOn >= '{criteria.CreatedAfterDate.Value}'");
+                        builder.Append($" AND ConsumedOn >= '{criteria.CreatedAfterDate.Value.ToString("yyyy-MM-dd")}'");
                     if (criteria.CreatedBeforeDate.HasValue)
-                        builder.Append($" AND ConsumedOn <= '{criteria.CreatedBeforeDate.Value}'");
+                        builder.Append($" AND ConsumedOn <= '{criteria.CreatedBeforeDate.Value.ToString("yyyy-MM-dd")}'");
                     break;
             }
+            builder.Append(" GROUP BY Type, Width, Thickness");
             return builder.ToString();
         }
 

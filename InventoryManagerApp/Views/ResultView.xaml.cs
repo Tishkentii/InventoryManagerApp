@@ -34,5 +34,11 @@ namespace InventoryManagerApp.Views
                 e.Handled = true;
             }
         }
+
+        private void Border_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            ((ResultViewModel)DataContext).HideDetailsCommand.Execute(null);
+            e.Handled = true;
+        }
     }
 }

@@ -12,40 +12,30 @@
         MaxWidth="{Binding Source={x:Static SystemParameters.WorkArea}, Path=Width}"
         MaxHeight="{Binding Source={x:Static SystemParameters.WorkArea}, Path=Height}"
         AllowsTransparency="True" ResizeMode="CanResizeWithGrip"
-        BorderBrush="#FF1D6AB8" BorderThickness="3">
+        BorderBrush="#FF76ADE4" BorderThickness="1">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="../Resources.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
-            <Style x:Key="gridStyleMouseOver" TargetType="Grid">
-                <Setter Property="Background" Value="{StaticResource ApplicationBrush}"/>
-                <Style.Triggers>
-                    <Trigger Property="IsMouseOver" Value="True">
-                        <Setter Property="Background" Value="Red"/>
-                    </Trigger>
-                    <DataTrigger Binding="{Binding Path=IsActive,RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}" Value="False">
-                        <Setter Property="Background" Value="Red"/>
-                    </DataTrigger>
-                </Style.Triggers>
-            </Style>
-
-         
         </ResourceDictionary>
     </Window.Resources>
 
     <DockPanel x:Name="RootWindow">
-        <Border DockPanel.Dock="Top" Background="#FF1D6AB8" MouseDown="TitleBar_MouseDown" Height="27" Padding="0,0,0,2">
+        <Border DockPanel.Dock="Top" Background="{StaticResource TitleBarBrush}" MouseDown="TitleBar_MouseDown" Height="30">
             <DockPanel x:Name="TitleBar">
-                <Button x:Name="CloseButton" DockPanel.Dock="Right" Click="CloseButton_Click" Background="Transparent" Width="25"  BorderThickness="0">
+                <Button x:Name="CloseButton" DockPanel.Dock="Right" Click="CloseButton_Click" Width="35"  BorderThickness="0" Style="{StaticResource TitleBarButtonMouseOverSyle}">
+                    <Image Source="/InventoryManagerApp;component/Assets/close.png" RenderOptions.BitmapScalingMode="HighQuality" Margin="9"/>
                 </Button>
-                <Button x:Name="MaxButton" DockPanel.Dock="Right" Click="MaxButton_Click" Background="Transparent" Width="25"  BorderThickness="0">
+                <Button x:Name="MaxButton" DockPanel.Dock="Right" Click="MaxButton_Click"  Width="35"  BorderThickness="0" Style="{StaticResource TitleBarButtonMouseOverSyle}">
+                    <Image Source="/InventoryManagerApp;component/Assets/maximize.png" RenderOptions.BitmapScalingMode="HighQuality" Margin="9"/>
                 </Button>
-                <Button x:Name="MinButton" DockPanel.Dock="Right" Click="MinButton_Click" Background="Transparent" Width="25" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" BorderThickness="0">
+                <Button x:Name="MinButton" DockPanel.Dock="Right" Click="MinButton_Click"  Width="35" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" BorderThickness="0" Style="{StaticResource TitleBarButtonMouseOverSyle}">
+                    <Image Source="/InventoryManagerApp;component/Assets/minimize.png" RenderOptions.BitmapScalingMode="HighQuality" Margin="9"/>
                 </Button>
 
-                <TextBlock Text="Tonevi Inventory Manager" Foreground="White" FontWeight="DemiBold" FontSize="12" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="35,0"/>
+                <TextBlock Text="Тоневи ООД - Инвентар" Foreground="White" FontWeight="DemiBold" FontSize="12" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="35,0"/>
             </DockPanel>
         </Border>
 
@@ -57,15 +47,15 @@
             </Grid.ColumnDefinitions>
 
             <DockPanel Name="panel" Background="{DynamicResource ApplicationBrush}">
-                <Button Command="{Binding ShowSearchCommand}" Background="Transparent" BorderThickness="0" Margin="2" DockPanel.Dock="Top" VerticalAlignment="Top">
-                    <Image Source="/InventoryManagerApp;component/Assets/search.png" Margin="4" RenderOptions.BitmapScalingMode="HighQuality"/>
+                <Button Command="{Binding ShowSearchCommand}" BorderThickness="0"  DockPanel.Dock="Top" VerticalAlignment="Top" Style="{StaticResource NormalButtonMouseOverSyle}">
+                <Image Source="/InventoryManagerApp;component/Assets/search.png" Margin="6" RenderOptions.BitmapScalingMode="HighQuality"/>
                 </Button>
 
-                <Button Background="Transparent" BorderThickness="0" Margin="2" DockPanel.Dock="Bottom" VerticalAlignment="Bottom">
-                    <Image Source="/InventoryManagerApp;component/Assets/settings.png" Margin="2" RenderOptions.BitmapScalingMode="HighQuality"/>
+                <Button BorderThickness="0" DockPanel.Dock="Bottom" VerticalAlignment="Bottom" Style="{StaticResource NormalButtonMouseOverSyle}">
+                    <Image Source="/InventoryManagerApp;component/Assets/settings.png" Margin="5" RenderOptions.BitmapScalingMode="HighQuality"/>
                 </Button>
-                <Button Command="{Binding SynchronizeDatabasesCommand}" Background="Transparent" BorderThickness="0" Margin="2" DockPanel.Dock="Bottom" VerticalAlignment="Bottom">
-                    <Image Source="/InventoryManagerApp;component/Assets/synchronize.png" Margin="2" RenderOptions.BitmapScalingMode="HighQuality"/>
+                <Button Command="{Binding SynchronizeDatabasesCommand}" BorderThickness="0" DockPanel.Dock="Bottom" VerticalAlignment="Bottom" Style="{StaticResource NormalButtonMouseOverSyle}">
+                    <Image Source="/InventoryManagerApp;component/Assets/synchronize.png" Margin="4" RenderOptions.BitmapScalingMode="HighQuality"/>
                 </Button>
             </DockPanel>
 

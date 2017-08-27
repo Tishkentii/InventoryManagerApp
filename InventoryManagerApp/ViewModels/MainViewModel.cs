@@ -19,7 +19,7 @@ namespace InventoryManagerApp.ViewModels
 
         public MainViewModel()
         {
-            _rollService = new RollService(new MsSqlRepository("test"), new MsAccessRepository("test"));
+            _rollService = new RollService(new MsSqlRepository(@"Data Source=DESKTOP-D8V4721\SQLEXPRESS;Initial Catalog=Tonevi_Inventory;Integrated Security=true"), new MsAccessRepository(@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=D:\Tonevi DB\tonevi.mdb"));
 
             MessengerInstance.Register<SearchCriteria>(this, OnSearch);
         }
@@ -71,9 +71,8 @@ namespace InventoryManagerApp.ViewModels
         public async void OnSearch(SearchCriteria criteria)
         {
             var summary = await _rollService.GetRollsSummaryAccordingToCriteriaAsync(criteria).ConfigureAwait(false);
-            //ResultVM = new ResultViewModel(_rollService, criteria, summary);
-            ResultVM = new ResultViewModel();
-            //SearchVM = null;
+            ResultVM = new ResultViewModel(_rollService, criteria, summary);
+            //ResultVM = new ResultViewModel();
             SearchVisible = false;
         }
 

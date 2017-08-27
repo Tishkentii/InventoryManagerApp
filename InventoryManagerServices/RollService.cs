@@ -33,12 +33,12 @@ namespace InventoryManagerServices
 
         public async Task<ICollection<RollSummary>> GetRollsSummaryAccordingToCriteriaAsync(SearchCriteria criteria)
         {
-            //var rollSummaryRawData = await Task.Run(() => _sqlRepository.ExecuteQuery(_commandHelper.GetRollSummaryCommandString(criteria)));
+            var rollSummaryRawData = await Task.Run(() => _sqlRepository.ExecuteQuery(_commandHelper.GetRollSummaryCommandString(criteria)));
             var list = new HashSet<RollSummary>();
-            //foreach (DataRow row in rollSummaryRawData.Rows)
-            //{
-            //    list.Add(new RollSummary(row));
-            //}
+            foreach (DataRow row in rollSummaryRawData.Rows)
+            {
+                list.Add(new RollSummary(row));
+            }
             //Parallel.ForEach(rollSummaryRawData.AsEnumerable(), (rawData =>
             //{
             //    lock (list)
@@ -49,12 +49,12 @@ namespace InventoryManagerServices
 
         public async Task<ICollection<Roll>> GetRollDetailsFromSummaryAsync(RollSummary summary, SearchType searchType)
         {
-            //var data = await Task.Run(() => _sqlRepository.ExecuteQuery(_commandHelper.GetSummaryDetailsCommandString(summary, searchType)));
+            var data = await Task.Run(() => _sqlRepository.ExecuteQuery(_commandHelper.GetSummaryDetailsCommandString(summary, searchType)));
             var list = new HashSet<Roll>();
-            //foreach (DataRow row in data.Rows)
-            //{
-            //    list.Add(new Roll(row));
-            //}
+            foreach (DataRow row in data.Rows)
+            {
+                list.Add(new Roll(row));
+            }
             return list;
         }
 
