@@ -19,7 +19,7 @@ namespace InventoryManagerApp.ViewModels
 
         public MainViewModel()
         {
-            _rollService = new RollService(new MsSqlRepository(@"Data Source=DESKTOP-D8V4721\SQLEXPRESS;Initial Catalog=Tonevi_Inventory;Integrated Security=true"), new MsAccessRepository(@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=D:\Tonevi DB\tonevi.mdb"));
+            _rollService = new RollService(new MsSqlRepository(Settings.Default.MsSqlConnectionString), new MsAccessRepository(Settings.Default.MsAccessConnectionString));
 
             MessengerInstance.Register<SearchCriteria>(this, OnSearch);
         }

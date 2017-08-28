@@ -80,8 +80,8 @@ namespace InventoryManagerServices
 
         public string GetSummaryDetailsCommandString(RollSummary summary, SearchType searchType)
         {
-            string rollType = summary.Type == RollType.Film ? "O" : "I";
-            var builder = new StringBuilder($"SELECT * FROM dbo.Rolls WHERE RollType = '{rollType}' AND Width = {summary.Width} AND Thickness = {summary.Thickness} AND CreatedOn >= {summary.FirstDateCreated} AND CreatedOn <= {summary.LastDateCreated} ");
+            string rollType = summary.Type == RollType.Film ? "I" : "O";
+            var builder = new StringBuilder($"SELECT * FROM dbo.Rolls WHERE Type = '{rollType}' AND Width = {summary.Width} AND Thickness = {summary.Thickness}");
             switch (searchType)
             {
                 case SearchType.Stock:

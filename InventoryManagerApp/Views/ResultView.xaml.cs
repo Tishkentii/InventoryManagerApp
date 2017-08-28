@@ -40,5 +40,10 @@ namespace InventoryManagerApp.Views
             ((ResultViewModel)DataContext).HideDetailsCommand.Execute(null);
             e.Handled = true;
         }
+
+        private void DetailsDataGrid_LoadingRow(object sender, DataGridRowEventArgs e)
+        {
+            e.Row.Header = (e.Row.GetIndex() + 1).ToString();
+        }
     }
 }

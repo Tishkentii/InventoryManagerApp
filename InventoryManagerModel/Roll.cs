@@ -17,12 +17,15 @@ namespace InventoryManagerModel
         public Roll(DataRow rollData)
         {
             ID = Convert.ToInt32(rollData["ID"]);
-            Type = rollData["RollType"].ToString() == "O" ? RollType.Tube : RollType.Film;
+            Type = rollData["Type"].ToString() == "O" ? RollType.Tube : RollType.Film;
             ProducedBy = rollData["Employee"].ToString();
             Width = Convert.ToInt32(rollData["Width"]);
             Thickness = Convert.ToInt32(rollData["Thickness"]);
+            Length = Convert.ToDouble(rollData["Length"]);
+            Weight = Convert.ToDouble(rollData["WeightReal"]);
             CreatedOn = Convert.ToDateTime(rollData["CreatedOn"]);
-            ConsumedOn = Convert.ToDateTime(rollData["ConsumedOn"]);
+            if (rollData["ConsumedOn"] != DBNull.Value)
+                ConsumedOn = Convert.ToDateTime(rollData["ConsumedOn"]);
             Comment = rollData["Comment"].ToString();
         }
 
