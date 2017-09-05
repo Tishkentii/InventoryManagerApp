@@ -11,7 +11,7 @@
 
     <SolidColorBrush x:Key="TitleBarBrush" Color="#FF0078D7"/>
     <SolidColorBrush x:Key="TitleBarHighlightBrush" Color="#FF498BCF"/>
-    <SolidColorBrush x:Key="ApplicationBrush" Color="#FF438CD6"/>
+    <SolidColorBrush x:Key="ApplicationBrush" Color="#FF5A9FE4"/>
     <SolidColorBrush x:Key="HighlightBrush" Color="#FF76ADE4"/>
     <SolidColorBrush x:Key="AccentBrush" Color="#FFE2E8F3"/>
 
@@ -60,12 +60,12 @@
 
     <!--DataGrid-->
     <Style x:Key="DataGridSummaryCellStyle" TargetType="DataGridCell">
-        <Setter Property="Padding" Value="5,15,0,15"/>
+        <Setter Property="Padding" Value="5,15,5,15"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type DataGridCell}">
                     <Border Padding="{TemplateBinding Padding}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="0" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
-                        <ContentPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                        <ContentPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" HorizontalAlignment="Center"/>
                     </Border>
                 </ControlTemplate>
             </Setter.Value>
@@ -73,12 +73,12 @@
     </Style>
 
     <Style x:Key="DataGridDetailsCellStyle" TargetType="DataGridCell">
-        <Setter Property="Padding" Value="5"/>
+        <Setter Property="Padding" Value="5,5,10,5"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type DataGridCell}">
                     <Border Padding="{TemplateBinding Padding}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="0" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
-                        <ContentPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                        <ContentPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" HorizontalAlignment="Center"/>
                     </Border>
                 </ControlTemplate>
             </Setter.Value>

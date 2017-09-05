@@ -40,8 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CommandStringHelper.cs" />
-    <Compile Include="RollService.cs" />
+    <Compile Include="BusinessService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

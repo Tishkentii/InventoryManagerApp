@@ -1,23 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.OleDb;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace InventoryManagerDataAccess
+namespace InventoryManagerDataAccess.Internal
 {
-    public class MsSqlRepository : IDbRepository
+    internal class DataProvider
     {
-        readonly string connectionString;
-
-        public MsSqlRepository(string connectionString)
+        internal static DataTable ExecuteAccessQuery(string query, string connectionString)
         {
-            this.connectionString = connectionString;
+            using (var connection = new OleDbConnection(connectionString))
+            using (var adapter = new OleDbDataAdapter(query, connection))
+            {
+                connection.Open();
+                var table = new DataTable();
+                adapter.Fill(table);
+                return table;
+            }
         }
 
-        public DataTable ExecuteQuery(string queryString)
+        internal static DataTable ExecuteSqlQuery(string queryString, string connectionString)
         {
             using (var connection = new SqlConnection(connectionString))
             using (var adapter = new SqlDataAdapter(queryString, connection))
@@ -29,27 +35,27 @@ namespace InventoryManagerDataAccess
             }
         }
 
-        public async Task<object> ExecuteScalarAsync(string queryString)
+        internal static object ExecuteSqlScalar(string queryString, string connectionString)
         {
             using (var connection = new SqlConnection(connectionString))
             using (var command = new SqlCommand(queryString, connection))
             {
                 connection.Open();
-                return await command.ExecuteScalarAsync();
+                return command.ExecuteScalar();
             }
         }
 
-        public async Task ExecuteNonQueryAsync(string commandString)
+        internal static void ExecuteSqlNonQuery(string commandString, string connectionString)
         {
             using (var connection = new SqlConnection(connectionString))
             using (var command = new SqlCommand(commandString, connection))
             {
                 connection.Open();
-                await command.ExecuteNonQueryAsync();
+                command.ExecuteNonQuery();
             }
         }
 
-        public async Task BulkCopyDataAsync(string destinationTableName, DataTable data, Dictionary<string, string> mappings)
+        internal static void SqlBulkCopyData(string destinationTableName, DataTable data, Dictionary<string, string> mappings, string connectionString)
         {
             using (var connection = new SqlConnection(connectionString))
             using (var bulkCopy = new SqlBulkCopy(connection))
@@ -61,7 +67,7 @@ namespace InventoryManagerDataAccess
                 }
                 connection.Open();
                 bulkCopy.DestinationTableName = destinationTableName; // Rolls
-                await bulkCopy.WriteToServerAsync(data);
+                bulkCopy.WriteToServer(data);
             }
         }
     }

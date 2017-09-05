@@ -40,10 +40,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IDbRepository.cs" />
-    <Compile Include="Implementations\MsAccessRepository.cs" />
-    <Compile Include="Implementations\MsSqlRepository.cs" />
+    <Compile Include="Interfaces\IDataRepository.cs" />
+    <Compile Include="Implementations\DataRepository.cs" />
+    <Compile Include="Internal\CommandStringHelper.cs" />
+    <Compile Include="Internal\DataProvider.cs" />
+    <Compile Include="Internal\ObjectFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\InventoryManagerModel\InventoryManagerModel.csproj">
+      <Project>{FF30B7C2-6CB8-47D3-8C44-F03EA7CEFB29}</Project>
+      <Name>InventoryManagerModel</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

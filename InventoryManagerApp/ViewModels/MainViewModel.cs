@@ -3,23 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
-using InventoryManagerApp.Properties;
-using InventoryManagerDataAccess;
-using InventoryManagerModel;
+using InventoryManagerModel.DTOs;
 using InventoryManagerServices;
 
 namespace InventoryManagerApp.ViewModels
 {
     class MainViewModel : ViewModelBase
     {
-        readonly RollService _rollService;
+        readonly BusinessService _service;
 
-        public MainViewModel()
+        public MainViewModel() { }
+
+        public MainViewModel(BusinessService service)
         {
-            _rollService = new RollService(new MsSqlRepository(Settings.Default.MsSqlConnectionString), new MsAccessRepository(Settings.Default.MsAccessConnectionString));
+            _service = service;
 
             MessengerInstance.Register<SearchCriteria>(this, OnSearch);
         }
@@ -65,14 +66,12 @@ namespace InventoryManagerApp.ViewModels
         {
             SearchVM = new SearchViewModel();
             SearchVisible = true;
-            //ResultVM = null;
         }
 
         public async void OnSearch(SearchCriteria criteria)
         {
-            var summary = await _rollService.GetRollsSummaryAccordingToCriteriaAsync(criteria).ConfigureAwait(false);
-            ResultVM = new ResultViewModel(_rollService, criteria, summary);
-            //ResultVM = new ResultViewModel();
+            var summary = await _service.GetRollsSummaryAsync(criteria).ConfigureAwait(false);
+            ResultVM = new ResultViewModel(_service, criteria, summary);
             SearchVisible = false;
         }
 
@@ -80,12 +79,12 @@ namespace InventoryManagerApp.ViewModels
         {
             try
             {
-                await _rollService.SynchronizeDatabasesAsync();
+                await _service.SynchronizeDatabasesAsync();
+                MessageBox.Show("Синхронизацията успешна.", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"ERROR: {ex.Message}");
-                // TODO Show message box
+                MessageBox.Show($"Синхронизацията неуспешна.\n{ex.Message}", "Провал", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }

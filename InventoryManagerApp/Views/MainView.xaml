@@ -23,6 +23,7 @@
     </Window.Resources>
 
     <DockPanel x:Name="RootWindow">
+        <!--Title bar-->
         <Border DockPanel.Dock="Top" Background="{StaticResource TitleBarBrush}" MouseDown="TitleBar_MouseDown" Height="30">
             <DockPanel x:Name="TitleBar">
                 <Button x:Name="CloseButton" DockPanel.Dock="Right" Click="CloseButton_Click" Width="35"  BorderThickness="0" Style="{StaticResource TitleBarButtonMouseOverSyle}">
@@ -35,10 +36,11 @@
                     <Image Source="/InventoryManagerApp;component/Assets/minimize.png" RenderOptions.BitmapScalingMode="HighQuality" Margin="9"/>
                 </Button>
 
-                <TextBlock Text="Тоневи ООД - Инвентар" Foreground="White" FontWeight="DemiBold" FontSize="12" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="35,0"/>
+                <TextBlock Text="Тоневи ООД" Foreground="White" FontWeight="DemiBold" FontSize="12" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="35,0"/>
             </DockPanel>
         </Border>
 
+        <!--Main area-->
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="30"/>
@@ -48,20 +50,16 @@
 
             <DockPanel Name="panel" Background="{DynamicResource ApplicationBrush}">
                 <Button Command="{Binding ShowSearchCommand}" BorderThickness="0"  DockPanel.Dock="Top" VerticalAlignment="Top" Style="{StaticResource NormalButtonMouseOverSyle}">
-                <Image Source="/InventoryManagerApp;component/Assets/search.png" Margin="6" RenderOptions.BitmapScalingMode="HighQuality"/>
+                <Image Source="/InventoryManagerApp;component/Assets/search.png" Margin="7" RenderOptions.BitmapScalingMode="HighQuality"/>
                 </Button>
 
                 <Button BorderThickness="0" DockPanel.Dock="Bottom" VerticalAlignment="Bottom" Style="{StaticResource NormalButtonMouseOverSyle}">
-                    <Image Source="/InventoryManagerApp;component/Assets/settings.png" Margin="5" RenderOptions.BitmapScalingMode="HighQuality"/>
+                    <Image Source="/InventoryManagerApp;component/Assets/settings.png" Margin="6" RenderOptions.BitmapScalingMode="HighQuality"/>
                 </Button>
                 <Button Command="{Binding SynchronizeDatabasesCommand}" BorderThickness="0" DockPanel.Dock="Bottom" VerticalAlignment="Bottom" Style="{StaticResource NormalButtonMouseOverSyle}">
-                    <Image Source="/InventoryManagerApp;component/Assets/synchronize.png" Margin="4" RenderOptions.BitmapScalingMode="HighQuality"/>
+                    <Image Source="/InventoryManagerApp;component/Assets/synchronize.png" Margin="6" RenderOptions.BitmapScalingMode="HighQuality"/>
                 </Button>
             </DockPanel>
-
-            <Border Grid.Column="2" HorizontalAlignment="Right">
-                <ContentControl  Content="{Binding ResultVM}" HorizontalAlignment="Right"/>
-            </Border>
 
             <Border  Grid.Column="1" HorizontalAlignment="Left">
                 <Border.Style>
@@ -78,8 +76,14 @@
                         </Style.Triggers>
                     </Style>
                 </Border.Style>
-                <ContentControl  Content="{Binding SearchVM}" Width="200" HorizontalAlignment="Left"/>
+                <ContentControl  Content="{Binding SearchVM}" HorizontalAlignment="Left"/>
             </Border>
+
+            <Border Grid.Column="2" HorizontalAlignment="Right">
+                <ContentControl  Content="{Binding ResultVM}" HorizontalAlignment="Right"/>
+            </Border>
+
+           
         </Grid>
     </DockPanel>
    

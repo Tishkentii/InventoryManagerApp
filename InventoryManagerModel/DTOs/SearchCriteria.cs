@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace InventoryManagerModel
+namespace InventoryManagerModel.DTOs
 {
     public class SearchCriteria : BaseModel
     {
@@ -56,7 +56,5 @@ namespace InventoryManagerModel
         }
 
         #endregion
-
-
     }
 }

@@ -13,7 +13,10 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using InventoryManagerApp.Properties;
 using InventoryManagerApp.ViewModels;
+using InventoryManagerDataAccess.Implementations;
+using InventoryManagerServices;
 
 namespace InventoryManagerApp.Views
 {
@@ -25,7 +28,7 @@ namespace InventoryManagerApp.Views
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = new MainViewModel();
+            DataContext = new MainViewModel(new BusinessService(new DataRepository(Settings.Default.MsSqlConnectionString, Settings.Default.MsAccessConnectionString)));
         }
 
         private void TitleBar_MouseDown(object sender, MouseButtonEventArgs e)

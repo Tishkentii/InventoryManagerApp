@@ -8,13 +8,15 @@ using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using InventoryManagerModel;
+using InventoryManagerModel.DTOs;
+using InventoryManagerModel.Entities;
 using InventoryManagerServices;
 
 namespace InventoryManagerApp.ViewModels
 {
     class ResultViewModel : ViewModelBase
     {
-        readonly RollService _rollService;
+        readonly BusinessService _rollService;
 
         public ResultViewModel()
         {
@@ -30,10 +32,9 @@ namespace InventoryManagerApp.ViewModels
                 new RollSummary(RollType.Tube,12, 100, 7, 70.12, 481, DateTime.MaxValue, DateTime.MinValue),
                 new RollSummary(RollType.Tube,30, 400, 12, 100.12, 4381, DateTime.MaxValue, DateTime.MinValue),
             };
-            Rolls = new List<Roll> { new Roll(1), new Roll(2), new Roll(3) };
         }
 
-        public ResultViewModel(RollService rollService, SearchCriteria criteria, ICollection<RollSummary> summaries)
+        public ResultViewModel(BusinessService rollService, SearchCriteria criteria, ICollection<RollSummary> summaries)
         {
             _rollService = rollService;
             SearchCriteria = criteria;
@@ -84,7 +85,7 @@ namespace InventoryManagerApp.ViewModels
 
         public async Task ShowDetails()
         {
-            Rolls = await _rollService.GetRollDetailsFromSummaryAsync(SelectedSummary, SearchCriteria.SearchType);
+            Rolls = await _rollService.GetRollDetailsAsync(SearchCriteria.SearchType, SelectedSummary);
             DetailsVisible = true;
         }
 

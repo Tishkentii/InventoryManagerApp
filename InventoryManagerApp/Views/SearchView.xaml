@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:InventoryManagerApp.Views"
              xmlns:vm="clr-namespace:InventoryManagerApp.ViewModels"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="225"
+             d:DesignHeight="450" d:DesignWidth="210"
              d:DataContext="{d:DesignInstance vm:SearchViewModel, IsDesignTimeCreatable=True}">
     <UserControl.Resources>
         <ResourceDictionary>
@@ -37,11 +37,11 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <Border Background="{StaticResource AccentBrush}" Padding="15,15,15,10" BorderBrush="LightGray" BorderThickness="0,0,1,0">
-        <Grid>
+    <Border Background="{StaticResource AccentBrush}" Padding="14" BorderBrush="LightGray" BorderThickness="0,0,1,0">
+        <Grid HorizontalAlignment="Center">
             <Grid.RowDefinitions>
-                <RowDefinition Height="200"/>
-                <RowDefinition Height="auto"/>
+                <RowDefinition Height="200"/>   <!--normal search-->
+                <RowDefinition Height="auto"/>  <!--dates panel-->
                 <RowDefinition Height="40"/>
             </Grid.RowDefinitions>
 
@@ -53,8 +53,8 @@
                     <RowDefinition Height="55"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition />
-                    <ColumnDefinition Width="105"/>
+                    <ColumnDefinition Width="70"/>
+                    <ColumnDefinition Width="100"/>
                 </Grid.ColumnDefinitions>
 
                 <Label Content="Търси в" FontSize="13" FontWeight="DemiBold" VerticalAlignment="Top"/>
