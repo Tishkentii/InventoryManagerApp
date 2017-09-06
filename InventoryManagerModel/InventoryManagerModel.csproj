@@ -41,11 +41,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseModel.cs" />
+    <Compile Include="Entities\RollSize.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="Entities\Roll.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DTOs\SearchCriteria.cs" />
-    <Compile Include="Entities\RollSummary.cs" />
+    <Compile Include="DTOs\RollSummary.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

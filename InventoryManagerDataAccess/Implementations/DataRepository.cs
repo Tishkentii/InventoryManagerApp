@@ -48,7 +48,9 @@ namespace InventoryManagerDataAccess.Implementations
         {
             var id = DataProvider.ExecuteSqlScalar(CommandStringHelper.LastCreatedRollIDCommandString, _sqlConnectionString);
             DataTable accessData = DataProvider.ExecuteAccessQuery(CommandStringHelper.GetLatestAccessDataCommandString((int)id), _accessConnectionString);
-            DataProvider.SqlBulkCopyData("Rolls", accessData, CommandStringHelper.AccessToSqlColumnMapping, _sqlConnectionString);
+            DataProvider.SqlBulkCopyData("RollSync", accessData, CommandStringHelper.AccessToSqlColumnMapping, _sqlConnectionString);
+
+            // todo create procedure to move data from the sync table to the  rolls table
         }
     }
 }

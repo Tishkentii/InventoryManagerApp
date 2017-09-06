@@ -5,11 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace InventoryManagerModel.Entities
+namespace InventoryManagerModel.DTOs
 {
     public class RollSummary
     {
-        public RollSummary(RollType type, int rollCount, int width, int thickness, double totalLength, double totalWeight, DateTime lastDateCreated, DateTime firstDateCreated)
+        public RollSummary(RollType type, int rollCount, int width, int thickness, double totalLength, double totalWeight, DateTime? lastDateCreated, DateTime? firstDateCreated)
         {
             RollCount = rollCount >= 0 ? rollCount : throw new ArgumentException("rollCount");
             Width = width > 0 ? width : throw new ArgumentException("width");
@@ -37,9 +37,9 @@ namespace InventoryManagerModel.Entities
 
         public double TotalWeight { get; private set; }
 
-        public DateTime LastDateCreated { get; private set; }
+        public DateTime? LastDateCreated { get; private set; }
 
-        public DateTime FirstDateCreated { get; private set; }
+        public DateTime? FirstDateCreated { get; private set; }
 
         #region Overrides
 

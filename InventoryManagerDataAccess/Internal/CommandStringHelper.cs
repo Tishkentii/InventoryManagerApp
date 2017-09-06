@@ -46,32 +46,36 @@ namespace InventoryManagerDataAccess.Internal
             if (criteria == null)
                 throw new ArgumentNullException("criteria");
 
-            var builder = new StringBuilder($"SELECT COUNT(r2.id) AS RollCount, Type, Width, Thickness, sum(Length) AS TotalLength, sum(WeightReal) AS TotalWeight, min(Createdon) AS FirstDateCreated, max(createdon) AS LastDateCreated FROM dbo.Rolls WHERE Type = ");
-            builder.Append(criteria.RollType == RollType.Tube ? "'O'" : "'I'");
-            if (criteria.Width.HasValue)
-                builder.Append($" AND Width = {criteria.Width.Value}");
-            if (criteria.Thickness.HasValue)
-                builder.Append($" AND Thickness = {criteria.Thickness.Value}");
+            var builder = new StringBuilder(
+                @"SELECT s.type, s.Width, s.Thickness, count(r.id) AS Count, SUM(r.Length) AS TotalLength, SUM(r.WeightReal) AS TotalWeight, MIN(r.CreatedOn) AS FirstDateCreated, MAX(r.CreatedOn) AS LastDateCreated 
+                FROM dbo.RollSizes s LEFT JOIN dbo.Rolls r ON r.SizeID = s.SizeID ");
             switch (criteria.SearchType)
             {
                 case SearchType.Stock:
-                    builder.Append($" AND ConsumedOn is null");
+                    builder.Append(" AND r.ConsumedOn is null");
                     break;
                 case SearchType.Production:
                     if (criteria.CreatedAfterDate.HasValue)
-                        builder.Append($" AND CreatedOn >= '{criteria.CreatedAfterDate.Value.ToString("yyyy-MM-dd")}'");
+                        builder.Append($" AND r.CreatedOn >= '{criteria.CreatedAfterDate.Value.ToString("yyyy-MM-dd")}'");
                     if (criteria.CreatedBeforeDate.HasValue)
-                        builder.Append($" AND CreatedOn <= '{criteria.CreatedBeforeDate.Value.ToString("yyyy-MM-dd")}'");
+                        builder.Append($" AND r.CreatedOn <= '{criteria.CreatedBeforeDate.Value.ToString("yyyy-MM-dd")}'");
                     break;
                 case SearchType.Consumption:
-                    builder.Append(" AND ConsumedOn is not null");
+                    builder.Append(" AND r.ConsumedOn is not null");
                     if (criteria.CreatedAfterDate.HasValue)
-                        builder.Append($" AND ConsumedOn >= '{criteria.CreatedAfterDate.Value.ToString("yyyy-MM-dd")}'");
+                        builder.Append($" AND r.ConsumedOn >= '{criteria.CreatedAfterDate.Value.ToString("yyyy-MM-dd")}'");
                     if (criteria.CreatedBeforeDate.HasValue)
-                        builder.Append($" AND ConsumedOn <= '{criteria.CreatedBeforeDate.Value.ToString("yyyy-MM-dd")}'");
+                        builder.Append($" AND r.ConsumedOn <= '{criteria.CreatedBeforeDate.Value.ToString("yyyy-MM-dd")}'");
                     break;
             }
-            builder.Append(" GROUP BY Type, Width, Thickness");
+            builder.Append($" WHERE s.Type = ");
+            builder.Append(criteria.RollType == RollType.Tube ? "'O'" : "'I'");
+            if (criteria.Width.HasValue)
+                builder.Append($" AND s.Width = {criteria.Width.Value}");
+            if (criteria.Thickness.HasValue)
+                builder.Append($" AND s.Thickness = {criteria.Thickness.Value}");
+
+            builder.Append(" GROUP BY s.Type, s.Width, s.Thickness");
             return builder.ToString();
         }
 

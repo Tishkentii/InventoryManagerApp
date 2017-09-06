@@ -9,31 +9,25 @@ namespace InventoryManagerModel.Entities
 {
     public class Roll
     {
-        public Roll(int id, RollType type, string producesBy, int width, int thickness, double length, double weight, string comment, DateTime createdOn, DateTime? consumedOn = null)
+        public Roll(int id, RollSize size, string producesBy, double length, double weight, string notes, DateTime createdOn, DateTime? consumedOn = null)
         {
-            ID = id > 0 ? id : throw new ArgumentException("id");
-            Type = type;
+            RollID = id > 0 ? id : throw new ArgumentException("id");
+            Size = size;
             ProducedBy = !String.IsNullOrEmpty(producesBy) ? producesBy : throw new ArgumentException("producedBy");
-            Width = width > 0 ? width : throw new ArgumentException("width");
-            Thickness = thickness > 0 ? thickness : throw new ArgumentException("thickness");
             Length = length > 0 ? length : throw new ArgumentException("length");
             Weight = weight > 0 ? weight : throw new ArgumentException("weight");
-            Comment = comment ?? throw new ArgumentException("comment");
+            Notes = notes ?? throw new ArgumentException("comment");
             if (consumedOn.HasValue && createdOn > consumedOn.Value)
                 throw new ArgumentException("createdOn/consumedOn");
             CreatedOn = createdOn;
             ConsumedOn = consumedOn;
         }
 
-        public int ID { get; private set; }
+        public int RollID { get; private set; }
 
-        public RollType Type { get; private set; }
+        public RollSize Size { get; private set; }
 
         public string ProducedBy { get; private set; }
-
-        public double Width { get; private set; }
-
-        public double Thickness { get; private set; }
 
         public double Length { get; private set; }
 
@@ -43,6 +37,6 @@ namespace InventoryManagerModel.Entities
 
         public DateTime? ConsumedOn { get; private set; }
 
-        public string Comment { get; private set; }
+        public string Notes { get; private set; }
     }
 }

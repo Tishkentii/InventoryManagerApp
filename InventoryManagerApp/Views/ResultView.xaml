@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
              xmlns:local="clr-namespace:InventoryManagerApp.Views"
              xmlns:vm="clr-namespace:InventoryManagerApp.ViewModels"
              mc:Ignorable="d" 
@@ -31,7 +32,11 @@
                 <Setter Property="HorizontalContentAlignment" Value="Center"/>
             </Style>
 
-        
+            <CollectionViewSource Source="{Binding Summaries}" x:Key="SummaryItems">
+                <CollectionViewSource.SortDescriptions>
+                    <scm:SortDescription PropertyName="Width" Direction="Ascending"/>
+                </CollectionViewSource.SortDescriptions>
+            </CollectionViewSource>
 
         </ResourceDictionary>
     </UserControl.Resources>
@@ -55,7 +60,7 @@
 
         <Border Grid.Row="1" BorderBrush="LightGray" BorderThickness="0,1,0,0">
             <DataGrid  Margin="0" RowBackground="White" AlternatingRowBackground="{StaticResource AccentBrush}" SelectionMode="Single" IsReadOnly="True" AutoGenerateColumns="False" HeadersVisibility="Column"
-                  ItemsSource="{Binding Summaries}" SelectedItem="{Binding SelectedSummary}" BorderThickness="0" GridLinesVisibility="None"
+                  ItemsSource="{Binding Source={StaticResource SummaryItems}}" SelectedItem="{Binding SelectedSummary}" BorderThickness="0" GridLinesVisibility="None"
                   CellStyle="{StaticResource DataGridSummaryCellStyle}" Background="WhiteSmoke">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Ширина" Binding="{Binding Width}" Width="70" SortDirection="Ascending"
