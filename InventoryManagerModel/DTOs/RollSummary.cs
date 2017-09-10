@@ -4,18 +4,16 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using InventoryManagerModel.Entities;
 
 namespace InventoryManagerModel.DTOs
 {
     public class RollSummary
     {
-        public RollSummary(RollType type, int rollCount, int width, int thickness, double totalLength, double totalWeight, DateTime? lastDateCreated, DateTime? firstDateCreated)
+        public RollSummary(RollSize rollSize, int rollCount, double totalLength, double totalWeight, DateTime? lastDateCreated, DateTime? firstDateCreated)
         {
+            RollSize = rollSize ?? throw new ArgumentException("rollSize");
             RollCount = rollCount >= 0 ? rollCount : throw new ArgumentException("rollCount");
-            Width = width > 0 ? width : throw new ArgumentException("width");
-            Thickness = thickness > 0 ? thickness : throw new ArgumentException("thickness");
-
-
             TotalLength = totalLength >= 0 ? totalLength : throw new ArgumentException("total length");
             TotalWeight = totalWeight >= 0 ? totalWeight : throw new ArgumentException("total weigth");
 
@@ -25,13 +23,9 @@ namespace InventoryManagerModel.DTOs
             FirstDateCreated = firstDateCreated;
         }
 
-        public RollType Type { get; private set; }
+        public RollSize RollSize { get; private set; }
 
         public int RollCount { get; private set; }
-
-        public int Width { get; private set; }
-
-        public int Thickness { get; private set; }
 
         public double TotalLength { get; private set; }
 
@@ -49,8 +43,7 @@ namespace InventoryManagerModel.DTOs
             {
                 return
                 RollCount == ((RollSummary)obj).RollCount &&
-                   Width == ((RollSummary)obj).Width &&
-                   Thickness == ((RollSummary)obj).Thickness &&
+                   RollSize == ((RollSummary)obj).RollSize &&
                    TotalLength == ((RollSummary)obj).TotalLength &&
                    TotalWeight == ((RollSummary)obj).TotalWeight &&
                    LastDateCreated == ((RollSummary)obj).LastDateCreated &&

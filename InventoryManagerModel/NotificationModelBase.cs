@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace InventoryManagerModel
 {
-    public abstract class BaseModel : INotifyPropertyChanged
+    public abstract class NotificationModelBase : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 

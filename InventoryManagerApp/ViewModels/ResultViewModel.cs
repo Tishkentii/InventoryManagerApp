@@ -17,33 +17,36 @@ namespace InventoryManagerApp.ViewModels
     class ResultViewModel : ViewModelBase
     {
         readonly BusinessService _rollService;
+        readonly SearchCriteria _searchCriteria;
 
         public ResultViewModel()
         {
-            SearchCriteria = new SearchCriteria()
-            {
-                Width = 200,
-                Thickness = 70,
-                SearchType = SearchType.Stock
-            };
-            Summaries = new List<RollSummary>()
-            {
-                new RollSummary(RollType.Tube,10, 200, 7, 100.12, 4381, DateTime.MaxValue, DateTime.MinValue),
-                new RollSummary(RollType.Tube,12, 100, 7, 70.12, 481, DateTime.MaxValue, DateTime.MinValue),
-                new RollSummary(RollType.Tube,30, 400, 12, 100.12, 4381, DateTime.MaxValue, DateTime.MinValue),
-            };
+            //SearchCriteria = new SearchCriteria()
+            //{
+            //    Width = 200,
+            //    Thickness = 70,
+            //    SearchType = SearchType.Stock
+            //};
+            //Summaries = new List<RollSummary>()
+            //{
+            //    new RollSummary(new RollSize(1,RollType.Tube, 200,90),10, 100.12, 4381, DateTime.MaxValue, DateTime.MinValue),
+            //    new RollSummary(new RollSize(1,RollType.Tube, 200,90), 7, 70.12, 481, DateTime.MaxValue, DateTime.MinValue),
+            //};
         }
 
         public ResultViewModel(BusinessService rollService, SearchCriteria criteria, ICollection<RollSummary> summaries)
         {
             _rollService = rollService;
-            SearchCriteria = criteria;
+            _searchCriteria = criteria;
             Summaries = summaries;
+            SearchSummaryString = SetSearchSummaryString(criteria);
         }
 
         #region Properties
 
-        public SearchCriteria SearchCriteria { get; private set; }
+        //public SearchCriteria SearchCriteria { get; private set; }
+
+        public string SearchSummaryString { get; private set; }
 
         public ICollection<RollSummary> Summaries { get; private set; }
 
@@ -69,6 +72,7 @@ namespace InventoryManagerApp.ViewModels
             set => Set(ref _detailsVisible, value);
         }
 
+
         #endregion
 
         #region Commands
@@ -83,15 +87,43 @@ namespace InventoryManagerApp.ViewModels
 
         #endregion
 
-        public async Task ShowDetails()
+        async Task ShowDetails()
         {
-            Rolls = await _rollService.GetRollDetailsAsync(SearchCriteria.SearchType, SelectedSummary);
+            Rolls = await _rollService.GetRollDetailsAsync(_searchCriteria.SearchType, SelectedSummary);
             DetailsVisible = true;
         }
 
-        public void HideDetails()
+        void HideDetails()
         {
             DetailsVisible = false;
+        }
+
+        string SetSearchSummaryString(SearchCriteria searchCriteria)
+        {
+            var builder = new StringBuilder("Резултати от търсене в ");
+            switch (searchCriteria.SearchType)
+            {
+                case SearchType.Stock:
+                    builder.Append("СКЛАД ");
+                    break;
+                case SearchType.Production:
+                    builder.Append("ПРОИЗВЕДЕНИ ");
+                    break;
+                case SearchType.Consumption:
+                    builder.Append("ИЗРАБОТЕНИ ");
+                    break;
+            }
+            builder.Append("на ролки тип ");
+            builder.Append(searchCriteria.RollType == RollType.Tube ? "РЪКАВ" : "ДВОЙНО ЦЕПЕНО");
+            if (searchCriteria.Width.HasValue)
+                builder.Append($" и ШИРИНА = {searchCriteria.Width.Value}");
+            if (searchCriteria.Thickness.HasValue)
+                builder.Append($" и ДЕБЕЛИНА = {searchCriteria.Thickness.Value}");
+            if (searchCriteria.CreatedAfterDate.HasValue)
+                builder.Append($" и ПРОИЗВЕДЕНА СЛЕД {searchCriteria.CreatedAfterDate.Value.ToShortDateString()}");
+            if (searchCriteria.CreatedBeforeDate.HasValue)
+                builder.Append($" и ПРОИЗВЕДЕНА ПРЕДИ {searchCriteria.CreatedBeforeDate.Value.ToShortDateString()}");
+            return builder.ToString();
         }
 
     }

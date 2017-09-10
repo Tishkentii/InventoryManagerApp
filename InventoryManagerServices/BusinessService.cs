@@ -31,7 +31,7 @@ namespace InventoryManagerServices
 
         public async Task<ICollection<Roll>> GetRollDetailsAsync(SearchType searchType, RollSummary summary)
         {
-            return await Task.Run(() => _dataRepository.GetRollDetails(searchType, summary)).ConfigureAwait(false);
+            return await Task.Run(() => _dataRepository.GetRollDetails(searchType, summary.RollSize.SizeID)).ConfigureAwait(false);
         }
 
     }

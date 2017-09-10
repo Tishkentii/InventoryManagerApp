@@ -26,10 +26,8 @@ namespace InventoryManagerDataAccess.Internal
 
             return new RollSummary
                 (
-                    type: data["Type"].ToString() == "O" ? RollType.Tube : RollType.Film,
+                    rollSize: CreateRollSize(data),
                     rollCount: Convert.ToInt32(data["Count"]),
-                    width: Convert.ToInt32(data["Width"]),
-                    thickness: Convert.ToInt32(data["Thickness"]),
                     totalLength: data["TotalLength"] != DBNull.Value ? Convert.ToDouble(data["TotalLength"]) : 0,
                     totalWeight: data["TotalWeight"] != DBNull.Value ? Convert.ToDouble(data["TotalWeight"]) : 0,
                     lastDateCreated: lastCreated,
@@ -37,28 +35,35 @@ namespace InventoryManagerDataAccess.Internal
                 );
         }
 
+        internal static RollSize CreateRollSize(DataRow data)
+        {
+            return new RollSize
+                (
+                    sizeID: Convert.ToInt32(data["SizeID"]),
+                    type: data["Type"].ToString() == "O" ? RollType.Tube : RollType.Film,
+                    width: Convert.ToInt32(data["Width"]),
+                    thickness: Convert.ToInt32(data["Thickness"])
+                );
+        }
+
         internal static Roll CreateRoll(DataRow data)
         {
-            //DateTime? consumedOn;
-            //if (data["ConsumedOn"] != DBNull.Value)
-            //    consumedOn = Convert.ToDateTime(data["ConsumedOn"]);
-            //else
-            //    consumedOn = null;
-            //return new Roll
-            //    (
-            //        id: Convert.ToInt32(data["ID"]),
-            //        type: data["Type"].ToString() == "O" ? RollType.Tube : RollType.Film,
-            //        producesBy: data["Employee"].ToString(),
-            //        width: Convert.ToInt32(data["Width"]),
-            //        thickness: Convert.ToInt32(data["Thickness"]),
-            //        length: Convert.ToDouble(data["Length"]),
-            //        weight: Convert.ToDouble(data["WeightReal"]),
-            //        comment: data["Comment"].ToString(),
-            //        createdOn: Convert.ToDateTime(data["CreatedOn"]),
-            //        consumedOn: consumedOn
-            //    );
-
-            return null;
+            DateTime? consumedOn;
+            if (data["ConsumedOn"] != DBNull.Value)
+                consumedOn = Convert.ToDateTime(data["ConsumedOn"]);
+            else
+                consumedOn = null;
+            return new Roll
+                (
+                    id: Convert.ToInt32(data["ID"]),
+                    size: CreateRollSize(data),
+                    producedBy: data["ProducedBy"].ToString(),
+                    length: Convert.ToDouble(data["Length"]),
+                    weight: Convert.ToDouble(data["WeightReal"]),
+                    notes: data["Notes"].ToString(),
+                    createdOn: Convert.ToDateTime(data["CreatedOn"]),
+                    consumedOn: consumedOn
+                );
         }
     }
 }

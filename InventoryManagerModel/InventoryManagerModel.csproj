@@ -40,7 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BaseModel.cs" />
+    <Compile Include="NotificationModelBase.cs" />
     <Compile Include="Entities\RollSize.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="Entities\Roll.cs" />

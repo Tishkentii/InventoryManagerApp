@@ -33,9 +33,9 @@ namespace InventoryManagerDataAccess.Implementations
             return collection;
         }
 
-        public ICollection<Roll> GetRollDetails(SearchType searchType, RollSummary summary)
+        public ICollection<Roll> GetRollDetails(SearchType searchType, int sizeID)
         {
-            var sqlData = DataProvider.ExecuteSqlQuery(CommandStringHelper.GetSummaryDetailsCommandString(searchType, summary), _sqlConnectionString);
+            var sqlData = DataProvider.ExecuteSqlQuery(CommandStringHelper.GetSummaryDetailsCommandString(searchType, sizeID), _sqlConnectionString);
             var collection = new HashSet<Roll>();
             foreach (DataRow row in sqlData.Rows)
             {
@@ -46,8 +46,8 @@ namespace InventoryManagerDataAccess.Implementations
 
         public void SynchronizeAccessAndSqlDatabases()
         {
-            var id = DataProvider.ExecuteSqlScalar(CommandStringHelper.LastCreatedRollIDCommandString, _sqlConnectionString);
-            DataTable accessData = DataProvider.ExecuteAccessQuery(CommandStringHelper.GetLatestAccessDataCommandString((int)id), _accessConnectionString);
+            var lastestRollId = DataProvider.ExecuteSqlScalar(CommandStringHelper.LastCreatedRollIDCommandString, _sqlConnectionString);
+            DataTable accessData = DataProvider.ExecuteAccessQuery(CommandStringHelper.GetLatestAccessDataCommandString((int)lastestRollId), _accessConnectionString);
             DataProvider.SqlBulkCopyData("RollSync", accessData, CommandStringHelper.AccessToSqlColumnMapping, _sqlConnectionString);
 
             // todo create procedure to move data from the sync table to the  rolls table

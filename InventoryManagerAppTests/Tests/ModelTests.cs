@@ -33,22 +33,22 @@ namespace InventoryManagerAppTests.Tests
         //    Assert.Throws<ArgumentException>(() => new Roll(id, type, producesBy, width, thickness, length, weight, comment, createdOn, consumedOn));
         //}
 
-        [TestCaseSource(typeof(ModelTestData), "RollSummary_ValidData")]
-        public void RollSummary_Constructor_ValidParamas_ReturnsRollSummary(RollType type, int rollCount, int width, int thickness, double totalLength, double totalWeight, DateTime lastDateCreated, DateTime firstDateCreated)
-        {
-            var sut = new RollSummary(type, rollCount, width, thickness, totalLength, totalWeight, lastDateCreated, firstDateCreated);
-            Assert.That(sut.RollCount, Is.GreaterThanOrEqualTo(0), "rollCount negative");
-            Assert.That(sut.Width, Is.GreaterThan(0), "width 0 or negative");
-            Assert.That(sut.Thickness, Is.GreaterThan(0), "thickness 0 or negative");
-            Assert.That(sut.TotalLength, Is.GreaterThanOrEqualTo(0), "totalLength negative");
-            Assert.That(sut.TotalWeight, Is.GreaterThanOrEqualTo(0), "totalWeight negative");
-            Assert.That(sut.LastDateCreated, Is.GreaterThanOrEqualTo(sut.FirstDateCreated), "last is less than first");
-        }
+        //[TestCaseSource(typeof(ModelTestData), "RollSummary_ValidData")]
+        //public void RollSummary_Constructor_ValidParamas_ReturnsRollSummary(RollType type, int rollCount, int width, int thickness, double totalLength, double totalWeight, DateTime lastDateCreated, DateTime firstDateCreated)
+        //{
+        //    var sut = new RollSummary(type, rollCount, width, thickness, totalLength, totalWeight, lastDateCreated, firstDateCreated);
+        //    Assert.That(sut.RollCount, Is.GreaterThanOrEqualTo(0), "rollCount negative");
+        //    Assert.That(sut.Width, Is.GreaterThan(0), "width 0 or negative");
+        //    Assert.That(sut.Thickness, Is.GreaterThan(0), "thickness 0 or negative");
+        //    Assert.That(sut.TotalLength, Is.GreaterThanOrEqualTo(0), "totalLength negative");
+        //    Assert.That(sut.TotalWeight, Is.GreaterThanOrEqualTo(0), "totalWeight negative");
+        //    Assert.That(sut.LastDateCreated, Is.GreaterThanOrEqualTo(sut.FirstDateCreated), "last is less than first");
+        //}
 
-        [TestCaseSource(typeof(ModelTestData), "RollSummary_InvalidData")]
-        public void RollSummary_Constructor_InvalidParams_ThrowsArgument(RollType type, int rollCount, int width, int thickness, double totalLength, double totalWeight, DateTime lastDateCreated, DateTime firstDateCreated)
-        {
-            Assert.Throws<ArgumentException>(() => new RollSummary(type, rollCount, width, thickness, totalLength, totalWeight, lastDateCreated, firstDateCreated));
-        }
+        //[TestCaseSource(typeof(ModelTestData), "RollSummary_InvalidData")]
+        //public void RollSummary_Constructor_InvalidParams_ThrowsArgument(RollType type, int rollCount, int width, int thickness, double totalLength, double totalWeight, DateTime lastDateCreated, DateTime firstDateCreated)
+        //{
+        //    Assert.Throws<ArgumentException>(() => new RollSummary(type, rollCount, width, thickness, totalLength, totalWeight, lastDateCreated, firstDateCreated));
+        //}
     }
 }

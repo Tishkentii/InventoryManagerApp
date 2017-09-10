@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace InventoryManagerModel.DTOs
 {
-    public class SearchCriteria : BaseModel
+    public class SearchCriteria : NotificationModelBase
     {
         public SearchCriteria()
         {

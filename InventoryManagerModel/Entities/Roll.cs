@@ -9,11 +9,11 @@ namespace InventoryManagerModel.Entities
 {
     public class Roll
     {
-        public Roll(int id, RollSize size, string producesBy, double length, double weight, string notes, DateTime createdOn, DateTime? consumedOn = null)
+        public Roll(int id, RollSize size, string producedBy, double length, double weight, string notes, DateTime createdOn, DateTime? consumedOn)
         {
             RollID = id > 0 ? id : throw new ArgumentException("id");
             Size = size;
-            ProducedBy = !String.IsNullOrEmpty(producesBy) ? producesBy : throw new ArgumentException("producedBy");
+            ProducedBy = !String.IsNullOrEmpty(producedBy) ? producedBy : throw new ArgumentException("producedBy");
             Length = length > 0 ? length : throw new ArgumentException("length");
             Weight = weight > 0 ? weight : throw new ArgumentException("weight");
             Notes = notes ?? throw new ArgumentException("comment");

@@ -12,7 +12,8 @@
         MaxWidth="{Binding Source={x:Static SystemParameters.WorkArea}, Path=Width}"
         MaxHeight="{Binding Source={x:Static SystemParameters.WorkArea}, Path=Height}"
         AllowsTransparency="True" ResizeMode="CanResizeWithGrip"
-        BorderBrush="#FF76ADE4" BorderThickness="1">
+        BorderBrush="#FF76ADE4" BorderThickness="1"
+        Title="Тоневи ООД">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -35,8 +36,10 @@
                 <Button x:Name="MinButton" DockPanel.Dock="Right" Click="MinButton_Click"  Width="35" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" BorderThickness="0" Style="{StaticResource TitleBarButtonMouseOverSyle}">
                     <Image Source="/InventoryManagerApp;component/Assets/minimize.png" RenderOptions.BitmapScalingMode="HighQuality" Margin="9"/>
                 </Button>
-
+                
+                <!--<Image Source="/InventoryManagerApp;component/Assets/app_icon.png" DockPanel.Dock="Left" Margin="7" HorizontalAlignment="Left" VerticalAlignment="Center" RenderOptions.BitmapScalingMode="HighQuality"/>-->
                 <TextBlock Text="Тоневи ООД" Foreground="White" FontWeight="DemiBold" FontSize="12" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="35,0"/>
+
             </DockPanel>
         </Border>
 

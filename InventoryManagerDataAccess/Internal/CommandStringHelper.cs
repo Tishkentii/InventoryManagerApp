@@ -47,7 +47,7 @@ namespace InventoryManagerDataAccess.Internal
                 throw new ArgumentNullException("criteria");
 
             var builder = new StringBuilder(
-                @"SELECT s.type, s.Width, s.Thickness, count(r.id) AS Count, SUM(r.Length) AS TotalLength, SUM(r.WeightReal) AS TotalWeight, MIN(r.CreatedOn) AS FirstDateCreated, MAX(r.CreatedOn) AS LastDateCreated 
+                @"SELECT s.SizeID, s.type, s.Width, s.Thickness, count(r.id) AS Count, SUM(r.Length) AS TotalLength, SUM(r.WeightReal) AS TotalWeight, MIN(r.CreatedOn) AS FirstDateCreated, MAX(r.CreatedOn) AS LastDateCreated 
                 FROM dbo.RollSizes s LEFT JOIN dbo.Rolls r ON r.SizeID = s.SizeID ");
             switch (criteria.SearchType)
             {
@@ -75,14 +75,14 @@ namespace InventoryManagerDataAccess.Internal
             if (criteria.Thickness.HasValue)
                 builder.Append($" AND s.Thickness = {criteria.Thickness.Value}");
 
-            builder.Append(" GROUP BY s.Type, s.Width, s.Thickness");
+            builder.Append(" GROUP BY s.SizeID, s.Type, s.Width, s.Thickness");
             return builder.ToString();
         }
 
-        internal static string GetSummaryDetailsCommandString(SearchType searchType, RollSummary summary)
+        internal static string GetSummaryDetailsCommandString(SearchType searchType, int sizeID)
         {
-            string rollType = summary.Type == RollType.Film ? "I" : "O";
-            var builder = new StringBuilder($"SELECT * FROM dbo.Rolls WHERE Type = '{rollType}' AND Width = {summary.Width} AND Thickness = {summary.Thickness}");
+            //string rollType = summary.RollSize.Type == RollType.Film ? "I" : "O";
+            var builder = new StringBuilder($"SELECT r.*, s.Type, s.Width, s.Thickness FROM dbo.Rolls r LEFT JOIN dbo.RollSizes s ON s.SizeID = r.SizeID WHERE r.SizeID = {sizeID} ");
             switch (searchType)
             {
                 case SearchType.Stock:

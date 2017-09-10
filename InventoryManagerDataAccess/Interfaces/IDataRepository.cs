@@ -12,7 +12,7 @@ namespace InventoryManagerDataAccess.Interfaces
     public interface IDataRepository
     {
         ICollection<RollSummary> GetRollSummary(SearchCriteria searchCriteria);
-        ICollection<Roll> GetRollDetails(SearchType searchType, RollSummary summary);
+        ICollection<Roll> GetRollDetails(SearchType searchType, int sizeID);
 
         void SynchronizeAccessAndSqlDatabases();
     }

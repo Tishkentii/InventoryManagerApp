@@ -34,7 +34,7 @@
 
             <CollectionViewSource Source="{Binding Summaries}" x:Key="SummaryItems">
                 <CollectionViewSource.SortDescriptions>
-                    <scm:SortDescription PropertyName="Width" Direction="Ascending"/>
+                    <scm:SortDescription PropertyName="RollSize.Width" Direction="Ascending"/>
                 </CollectionViewSource.SortDescriptions>
             </CollectionViewSource>
 
@@ -47,7 +47,9 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+        <Label Content="{Binding SearchSummaryString}" FontSize="14" FontWeight="DemiBold" VerticalAlignment="Center" Margin="5,0"/>
+
+        <!--<StackPanel Orientation="Horizontal" VerticalAlignment="Center">
             <TextBlock Text="Резултати от търсене на" FontSize="14" Margin="10,0,5,0"/>
             <TextBlock Text="{Binding SearchCriteria.RollType}" FontSize="14" FontWeight="DemiBold"/>
             <TextBlock Text="в" FontSize="14" Margin="5,0,5,0"/>
@@ -56,22 +58,22 @@
             <TextBlock Text="{Binding SearchCriteria.Width}" FontSize="14" FontWeight="DemiBold"/>
             <TextBlock Text="и Дебелина =" FontSize="14" Margin="5,0"/>
             <TextBlock Text="{Binding SearchCriteria.Thickness}" FontSize="14" FontWeight="DemiBold"/>
-        </StackPanel>
+        </StackPanel>-->
 
         <Border Grid.Row="1" BorderBrush="LightGray" BorderThickness="0,1,0,0">
             <DataGrid  Margin="0" RowBackground="White" AlternatingRowBackground="{StaticResource AccentBrush}" SelectionMode="Single" IsReadOnly="True" AutoGenerateColumns="False" HeadersVisibility="Column"
                   ItemsSource="{Binding Source={StaticResource SummaryItems}}" SelectedItem="{Binding SelectedSummary}" BorderThickness="0" GridLinesVisibility="None"
                   CellStyle="{StaticResource DataGridSummaryCellStyle}" Background="WhiteSmoke">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Ширина" Binding="{Binding Width}" Width="70" SortDirection="Ascending"
+                    <DataGridTextColumn Header="Ширина (мм)" Binding="{Binding RollSize.Width}" Width="85" SortDirection="Ascending"
                                     HeaderStyle="{StaticResource ColumnHeaderStyle1}"/>
-                    <DataGridTextColumn Header="Дебелина" Binding="{Binding Thickness}" Width="70" SortDirection="{x:Null}"
+                    <DataGridTextColumn Header="Дебелина (μ)" Binding="{Binding RollSize.Thickness}" Width="85" SortDirection="{x:Null}"
                                     HeaderStyle="{StaticResource ColumnHeaderStyle2}"/>
                     <DataGridTextColumn Header="Брой ролки" Binding="{Binding RollCount}" Width="80" 
                                     HeaderStyle="{StaticResource ColumnHeaderStyle1}"/>
-                    <DataGridTextColumn Header="Обша дължина" Binding="{Binding TotalLength, StringFormat={}{0:### ###.00}}" Width="95" 
+                    <DataGridTextColumn Header="Обша дължина (м)" Binding="{Binding TotalLength, StringFormat={}{0:### ###.00}}" Width="115" 
                                     HeaderStyle="{StaticResource ColumnHeaderStyle2}"/>
-                    <DataGridTextColumn Header="Общо тегло" Binding="{Binding TotalWeight, StringFormat={}{0:### ###.00}}" Width="90" 
+                    <DataGridTextColumn Header="Общо тегло (кг)" Binding="{Binding TotalWeight, StringFormat={}{0:### ###.00}}" Width="100" 
                                     HeaderStyle="{StaticResource ColumnHeaderStyle1}"/>
                     <DataGridTextColumn Header="Най-рано произведена" Binding="{Binding FirstDateCreated, StringFormat=\{0:dd.MM.yyyy\}}" 
                                     HeaderStyle="{StaticResource ColumnHeaderStyle2}" Width="*" />
@@ -111,10 +113,10 @@
                     </Grid.RowDefinitions>
 
                     <DockPanel>
-                        <TextBlock Text="Детайли за размер: Ширина = " FontWeight="DemiBold" VerticalAlignment="Center" Margin="10,0,5,0"/>
-                        <TextBlock Text="{Binding SelectedSummary.Width}" VerticalAlignment="Center" Margin="0,0,5,0"/>
-                        <TextBlock Text="Дебелина = " FontWeight="DemiBold" VerticalAlignment="Center" Margin="0,0,5,0"/>
-                        <TextBlock Text="{Binding SelectedSummary.Thickness}" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                        <TextBlock Text="Детайли за размер: ШИРИНА = " FontWeight="DemiBold" VerticalAlignment="Center" Margin="30,0,5,0"/>
+                        <TextBlock Text="{Binding SelectedSummary.RollSize.Width}" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                        <TextBlock Text="ДЕБЕЛИНА = " FontWeight="DemiBold" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                        <TextBlock Text="{Binding SelectedSummary.RollSize.Thickness}" VerticalAlignment="Center" Margin="0,0,5,0"/>
                         <Button Command="{Binding HideDetailsCommand}" DockPanel.Dock="Right" VerticalAlignment="Top" HorizontalAlignment="Right" Style="{StaticResource NormalButtonMouseOverSyle}" BorderThickness="0" Margin="24,0,0,24">
                             <Image Source="/InventoryManagerApp;component/Assets/close.png" Margin="4,2,2,4"/>
                         </Button>
@@ -129,15 +131,15 @@
                                 </Style>
                             </DataGrid.RowHeaderStyle>
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="Номер" Binding="{Binding ID}" Width="70" 
+                                <DataGridTextColumn Header="Номер" Binding="{Binding RollID}" Width="70" 
                                                 HeaderStyle="{StaticResource ColumnHeaderStyle1}"/>
-                                <DataGridTextColumn Header="Дължина" Binding="{Binding Length}" Width="70"
+                                <DataGridTextColumn Header="Дължина (м)" Binding="{Binding Length}" Width="85"
                                                 HeaderStyle="{StaticResource ColumnHeaderStyle2}"/>
-                                <DataGridTextColumn Header="Тегло" Binding="{Binding Weight}" Width="70" 
+                                <DataGridTextColumn Header="Тегло (кг)" Binding="{Binding Weight}" Width="80" 
                                                 HeaderStyle="{StaticResource ColumnHeaderStyle1}"/>
                                 <DataGridTextColumn Header="Екструдерист" Binding="{Binding ProducedBy}" Width="100" 
                                                 HeaderStyle="{StaticResource ColumnHeaderStyle2}"/>
-                                <DataGridTextColumn Header="Партида" Binding="{Binding Comment}" Width="70" 
+                                <DataGridTextColumn Header="Партида" Binding="{Binding Notes}" Width="70" 
                                                 HeaderStyle="{StaticResource ColumnHeaderStyle2}"/>
                                 <DataGridTextColumn Header="Произведена на" Binding="{Binding CreatedOn, StringFormat=\{0:dd.MM.yyyy\}}" Width="*" SortDirection="Ascending"
                                                 HeaderStyle="{StaticResource ColumnHeaderStyle1}"/>
