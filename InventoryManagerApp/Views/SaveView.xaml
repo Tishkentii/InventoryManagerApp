@@ -1,0 +1,43 @@
+﻿<UserControl x:Class="InventoryManagerApp.Views.SaveView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:InventoryManagerApp.Views"
+             xmlns:vm="clr-namespace:InventoryManagerApp.ViewModels"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="210" >
+    <!--d:DataContext="{d:DesignInstance vm:SaveViewModel, IsDesignTimeCreatable=True}">-->
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Resources.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Border Background="{StaticResource AccentBrush}" Padding="14,5,14,14" BorderBrush="LightGray" BorderThickness="0,0,1,0">
+        <Grid >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Label Content="Запазване"  FontSize="17" FontWeight="DemiBold" HorizontalAlignment="Left"/>
+
+            <DockPanel Grid.Row="1">
+                <Label Content="Име" DockPanel.Dock="Left"/>
+                <TextBox  Grid.Column="1"  HorizontalAlignment="Stretch" VerticalAlignment="Center" TabIndex="2" Height="25" VerticalContentAlignment="Center" BorderThickness="1" FontSize="13"/>
+            </DockPanel>
+
+            <Button Grid.Row="2" Width="45" Height="20" Foreground="White" Content="Запази" HorizontalAlignment="Right" Style="{StaticResource NormalButtonMouseOverSyle}"/>
+
+
+            <DataGrid Name="FilesGrid" Grid.Row="3" ItemsSource="{Binding SummaryFiles}"/>
+        </Grid>
+    </Border>
+
+</UserControl>

@@ -50,7 +50,7 @@ namespace InventoryManagerDataAccess.Implementations
             DataTable accessData = DataProvider.ExecuteAccessQuery(CommandStringHelper.GetLatestAccessDataCommandString((int)lastestRollId), _accessConnectionString);
             DataProvider.SqlBulkCopyData("RollSync", accessData, CommandStringHelper.AccessToSqlColumnMapping, _sqlConnectionString);
 
-            // todo create procedure to move data from the sync table to the  rolls table
+            DataProvider.ExecuteSqlNonQuery("exec dbo.SyncRolls", _sqlConnectionString);
         }
     }
 }

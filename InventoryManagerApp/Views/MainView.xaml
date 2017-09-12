@@ -53,7 +53,11 @@
 
             <DockPanel Name="panel" Background="{DynamicResource ApplicationBrush}">
                 <Button Command="{Binding ShowSearchCommand}" BorderThickness="0"  DockPanel.Dock="Top" VerticalAlignment="Top" Style="{StaticResource NormalButtonMouseOverSyle}">
-                <Image Source="/InventoryManagerApp;component/Assets/search.png" Margin="7" RenderOptions.BitmapScalingMode="HighQuality"/>
+                    <Image Source="/InventoryManagerApp;component/Assets/search.png" Margin="7" RenderOptions.BitmapScalingMode="HighQuality"/>
+                </Button>
+
+                <Button Command="{Binding ShowSaveCommand}" BorderThickness="0"  DockPanel.Dock="Top" VerticalAlignment="Top" Style="{StaticResource NormalButtonMouseOverSyle}">
+                    <Image Source="/InventoryManagerApp;component/Assets/search.png" Margin="7" RenderOptions.BitmapScalingMode="HighQuality"/>
                 </Button>
 
                 <Button BorderThickness="0" DockPanel.Dock="Bottom" VerticalAlignment="Bottom" Style="{StaticResource NormalButtonMouseOverSyle}">
@@ -64,22 +68,22 @@
                 </Button>
             </DockPanel>
 
-            <Border  Grid.Column="1" HorizontalAlignment="Left">
+            <Border  Grid.Column="1" HorizontalAlignment="Stretch">
                 <Border.Style>
                     <Style TargetType="Border">
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding SearchVisible}" Value="True">
+                            <DataTrigger Binding="{Binding ActivePanelType, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=None}" Value="False">
                                 <DataTrigger.EnterActions>
-                                    <BeginStoryboard Storyboard="{StaticResource ShowSearchPanelScrolltoryboard}"/>
+                                    <BeginStoryboard Storyboard="{StaticResource ShowOptionPanelScrolltoryboard}"/>
                                 </DataTrigger.EnterActions>
                                 <DataTrigger.ExitActions>
-                                    <BeginStoryboard Storyboard="{StaticResource HideSearchPanelScrolltoryboard}"/>
+                                    <BeginStoryboard Storyboard="{StaticResource HideOptionPanelScrolltoryboard}"/>
                                 </DataTrigger.ExitActions>
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>
                 </Border.Style>
-                <ContentControl  Content="{Binding SearchVM}" HorizontalAlignment="Left"/>
+                <ContentControl  Content="{Binding ActivePanelVM}" HorizontalAlignment="Stretch"/>
             </Border>
 
             <Border Grid.Column="2" HorizontalAlignment="Right">

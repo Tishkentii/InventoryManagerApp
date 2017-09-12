@@ -28,7 +28,7 @@ namespace InventoryManagerApp.Views
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = new MainViewModel(new BusinessService(new DataRepository(Settings.Default.MsSqlConnectionString, Settings.Default.MsAccessConnectionString)));
+            DataContext = new MainViewModel(new BusinessService(new DataRepository(Settings.Default.MsSqlConnectionString, Settings.Default.MsAccessConnectionString)), new DirectoryService());
         }
 
         private void TitleBar_MouseDown(object sender, MouseButtonEventArgs e)

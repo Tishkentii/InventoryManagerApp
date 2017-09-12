@@ -14,24 +14,25 @@ namespace InventoryManagerApp.ViewModels
 {
     class MainViewModel : ViewModelBase
     {
-        readonly BusinessService _service;
+        readonly BusinessService _businessService;
+        readonly DirectoryService _dirService;
 
         public MainViewModel() { }
 
-        public MainViewModel(BusinessService service)
+        public MainViewModel(BusinessService businessService, DirectoryService directoryService)
         {
-            _service = service;
-
+            _businessService = businessService;
+            _dirService = directoryService;
             MessengerInstance.Register<SearchCriteria>(this, OnSearch);
         }
 
         #region Binding properties
 
-        SearchViewModel _searchViewModel;
-        public SearchViewModel SearchVM
+        ViewModelBase _activePanelVM;
+        public ViewModelBase ActivePanelVM
         {
-            get => _searchViewModel;
-            set => Set(ref _searchViewModel, value);
+            get => _activePanelVM;
+            set => Set(ref _activePanelVM, value);
         }
 
         ResultViewModel _resultViewModel;
@@ -41,11 +42,11 @@ namespace InventoryManagerApp.ViewModels
             set => Set(ref _resultViewModel, value);
         }
 
-        bool _searchVisible;
-        public bool SearchVisible
+        OptionPanelType _activePanelType;
+        public OptionPanelType ActivePanelType
         {
-            get => _searchVisible;
-            set => Set(ref _searchVisible, value);
+            get => _activePanelType;
+            set => Set(ref _activePanelType, value);
         }
 
         #endregion
@@ -56,30 +57,43 @@ namespace InventoryManagerApp.ViewModels
         public ICommand ShowSearchCommand =>
             _showSearchCommand ?? (_showSearchCommand = new RelayCommand(ShowSearch));
 
+        RelayCommand _showSaveCommand;
+        public ICommand ShowSaveCommand =>
+            _showSaveCommand ?? (_showSaveCommand = new RelayCommand(ShowSave));
+
         RelayCommand _synchronizeDatabasesCommand;
         public ICommand SynchronizeDatabasesCommand =>
             _synchronizeDatabasesCommand ?? (_synchronizeDatabasesCommand = new RelayCommand(async () => await SynchronizeDatabasesAsync()));
 
         #endregion
 
-        public void ShowSearch()
+        void ShowSearch()
         {
-            SearchVM = new SearchViewModel();
-            SearchVisible = true;
+            ActivePanelVM = new SearchViewModel();
+            ActivePanelType = OptionPanelType.None;
+            ActivePanelType = OptionPanelType.Search;
         }
 
-        public async void OnSearch(SearchCriteria criteria)
+        void ShowSave()
         {
-            var summary = await _service.GetRollsSummaryAsync(criteria).ConfigureAwait(false);
-            ResultVM = new ResultViewModel(_service, criteria, summary);
-            SearchVisible = false;
+            ActivePanelVM = new SaveViewModel(_dirService);
+            ActivePanelType = OptionPanelType.None;
+            ActivePanelType = OptionPanelType.Save;
+
         }
 
-        public async Task SynchronizeDatabasesAsync()
+        async void OnSearch(SearchCriteria criteria)
+        {
+            var summary = await _businessService.GetRollsSummaryAsync(criteria).ConfigureAwait(false);
+            ResultVM = new ResultViewModel(_businessService, criteria, summary);
+            ActivePanelType = OptionPanelType.None;
+        }
+
+        async Task SynchronizeDatabasesAsync()
         {
             try
             {
-                await _service.SynchronizeDatabasesAsync();
+                await _businessService.SynchronizeDatabasesAsync();
                 MessageBox.Show("Синхронизацията успешна.", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             catch (Exception ex)
@@ -87,5 +101,13 @@ namespace InventoryManagerApp.ViewModels
                 MessageBox.Show($"Синхронизацията неуспешна.\n{ex.Message}", "Провал", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+    }
+
+    public enum OptionPanelType
+    {
+        None,
+        Search,
+        Save,
+        Options
     }
 }

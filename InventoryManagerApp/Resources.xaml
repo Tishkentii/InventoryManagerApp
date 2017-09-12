@@ -19,6 +19,10 @@
         <v:SearchView/>
     </DataTemplate>
 
+    <DataTemplate DataType="{x:Type vm:SaveViewModel}">
+        <v:SaveView/>
+    </DataTemplate>
+
     <DataTemplate DataType="{x:Type vm:ResultViewModel}">
         <v:ResultView/>
     </DataTemplate>
@@ -32,13 +36,13 @@
         <DoubleAnimation Storyboard.TargetProperty="Height" From="100" To="0" Duration="0:0:0.15" AutoReverse="False"/>
     </Storyboard>
 
-    <Storyboard x:Key="ShowSearchPanelScrolltoryboard">
+    <Storyboard x:Key="ShowOptionPanelScrolltoryboard">
         <DoubleAnimation Storyboard.TargetProperty="Width" From="0" To="200" Duration="0:0:0.15" AutoReverse="False"/>
         <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0.0" To="1.0" Duration="0:0:0.15" Storyboard.TargetName="{x:Null}"/>
 
     </Storyboard>
 
-    <Storyboard x:Key="HideSearchPanelScrolltoryboard">
+    <Storyboard x:Key="HideOptionPanelScrolltoryboard">
         <DoubleAnimation Storyboard.TargetProperty="Width" From="200" To="0" Duration="0:0:0.15" AutoReverse="False"/>
         <DoubleAnimation Storyboard.TargetProperty="Opacity" From="1.0" To="0.0" Duration="0:0:0.15" Storyboard.TargetName="{x:Null}"/>
     </Storyboard>

@@ -37,15 +37,18 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <Border Background="{StaticResource AccentBrush}" Padding="14" BorderBrush="LightGray" BorderThickness="0,0,1,0">
+    <Border Background="{StaticResource AccentBrush}" Padding="14,5,14,14" BorderBrush="LightGray" BorderThickness="0,0,1,0" >
         <Grid HorizontalAlignment="Center">
             <Grid.RowDefinitions>
+                <RowDefinition Height="40"/>    <!--title-->
                 <RowDefinition Height="200"/>   <!--normal search-->
                 <RowDefinition Height="auto"/>  <!--dates panel-->
-                <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/>    <!--search button-->
             </Grid.RowDefinitions>
 
-            <Grid>
+            <Label Content="Търсене" FontSize="17" FontWeight="DemiBold" HorizontalAlignment="Left"/>
+
+            <Grid Grid.Row="1">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="65"/>
                     <RowDefinition Height="40"/>
@@ -57,7 +60,7 @@
                     <ColumnDefinition Width="100"/>
                 </Grid.ColumnDefinitions>
 
-                <Label Content="Търси в" FontSize="13" FontWeight="DemiBold" VerticalAlignment="Top"/>
+                <Label Content="Вид" FontSize="13" VerticalAlignment="Top"/>
                 <StackPanel Grid.Column="1" HorizontalAlignment="Stretch" Margin="0,5,0,0">
                     <RadioButton GroupName="SearchTypes" Content="Склад" FontSize="13" BorderThickness="1"
                         IsChecked="{Binding Criteria.SearchType, Mode=TwoWay, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Stock}" Margin="0,2"/>
@@ -67,15 +70,15 @@
                         IsChecked="{Binding Criteria.SearchType, Mode=TwoWay, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Consumption}"/>
                 </StackPanel>
 
-                <Label Grid.Row="1" Content="Ширина" FontSize="13" FontWeight="DemiBold" VerticalAlignment="Center"/>
+                <Label Grid.Row="1" Content="Ширина" FontSize="13"  VerticalAlignment="Center"/>
                 <TextBox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" TabIndex="1" Height="25" VerticalContentAlignment="Center" BorderThickness="1" FontSize="13"
                      Text="{Binding Criteria.Width, TargetNullValue=''}" />
 
-                <Label Grid.Row="2" Content="Дебелина" FontSize="13" FontWeight="DemiBold" VerticalAlignment="Center"/>
+                <Label Grid.Row="2" Content="Дебелина" FontSize="13" VerticalAlignment="Center"/>
                 <TextBox Grid.Row="2" Grid.Column="1"  HorizontalAlignment="Stretch" VerticalAlignment="Center" TabIndex="2" Height="25" VerticalContentAlignment="Center" BorderThickness="1" FontSize="13"
                      Text="{Binding Criteria.Thickness, TargetNullValue=''}"/>
 
-                <Label Grid.Row="3" Content="Фолио" FontSize="13" FontWeight="DemiBold" VerticalAlignment="Top" Margin="0,5,0,0"/>
+                <Label Grid.Row="3" Content="Фолио" FontSize="13"  VerticalAlignment="Top" Margin="0,5,0,0"/>
                 <StackPanel Grid.Row="3" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" >
                     <RadioButton GroupName="RollTypes" Content="Ръкав" FontSize="13" Margin="0,1" BorderThickness="1"
                               IsChecked="{Binding Criteria.RollType, Mode=TwoWay, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Tube}"/>
@@ -84,7 +87,7 @@
                 </StackPanel>
             </Grid>
 
-            <Border Grid.Row="1" Margin="0,5">
+            <Border Grid.Row="2" Margin="0,5">
                 <Border.Style>
                     <Style TargetType="Border">
                         <Style.Triggers>
@@ -103,7 +106,7 @@
                         </Style.Triggers>
                     </Style>
                 </Border.Style>
-                <Grid Grid.Row="1">
+                <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="40"/>
                         <RowDefinition Height="40"/>
@@ -123,9 +126,7 @@
                 </Grid>
             </Border>
 
-
-            <Button Grid.Row="2" Command="{Binding SearchCommand}" Content="Търси" FontSize="13" FontWeight="DemiBold" Foreground="White" Margin="0,0" BorderThickness="0" Style="{StaticResource NormalButtonMouseOverSyle}" VerticalAlignment="Center" Height="25"/>
-
+            <Button Grid.Row="3" Command="{Binding SearchCommand}" Content="Търси" FontSize="13" FontWeight="DemiBold" Foreground="White" Margin="0,0" BorderThickness="0" Style="{StaticResource NormalButtonMouseOverSyle}" VerticalAlignment="Center" Height="25"/>
 
         </Grid>
     </Border>

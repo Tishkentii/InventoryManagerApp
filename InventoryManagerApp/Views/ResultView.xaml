@@ -49,17 +49,6 @@
 
         <Label Content="{Binding SearchSummaryString}" FontSize="14" FontWeight="DemiBold" VerticalAlignment="Center" Margin="5,0"/>
 
-        <!--<StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-            <TextBlock Text="Резултати от търсене на" FontSize="14" Margin="10,0,5,0"/>
-            <TextBlock Text="{Binding SearchCriteria.RollType}" FontSize="14" FontWeight="DemiBold"/>
-            <TextBlock Text="в" FontSize="14" Margin="5,0,5,0"/>
-            <TextBlock Text="{Binding SearchCriteria.SearchType}" FontSize="14" FontWeight="DemiBold"/>
-            <TextBlock Text="с Ширина =" FontSize="14" Margin="5,0"/>
-            <TextBlock Text="{Binding SearchCriteria.Width}" FontSize="14" FontWeight="DemiBold"/>
-            <TextBlock Text="и Дебелина =" FontSize="14" Margin="5,0"/>
-            <TextBlock Text="{Binding SearchCriteria.Thickness}" FontSize="14" FontWeight="DemiBold"/>
-        </StackPanel>-->
-
         <Border Grid.Row="1" BorderBrush="LightGray" BorderThickness="0,1,0,0">
             <DataGrid  Margin="0" RowBackground="White" AlternatingRowBackground="{StaticResource AccentBrush}" SelectionMode="Single" IsReadOnly="True" AutoGenerateColumns="False" HeadersVisibility="Column"
                   ItemsSource="{Binding Source={StaticResource SummaryItems}}" SelectedItem="{Binding SelectedSummary}" BorderThickness="0" GridLinesVisibility="None"

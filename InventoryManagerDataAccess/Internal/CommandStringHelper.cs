@@ -81,7 +81,6 @@ namespace InventoryManagerDataAccess.Internal
 
         internal static string GetSummaryDetailsCommandString(SearchType searchType, int sizeID)
         {
-            //string rollType = summary.RollSize.Type == RollType.Film ? "I" : "O";
             var builder = new StringBuilder($"SELECT r.*, s.Type, s.Width, s.Thickness FROM dbo.Rolls r LEFT JOIN dbo.RollSizes s ON s.SizeID = r.SizeID WHERE r.SizeID = {sizeID} ");
             switch (searchType)
             {
