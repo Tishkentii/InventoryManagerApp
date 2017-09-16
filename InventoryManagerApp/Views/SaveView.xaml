@@ -21,7 +21,7 @@
         <Grid >
             <Grid.RowDefinitions>
                 <RowDefinition Height="40"/>
-                <RowDefinition Height="30"/>
+                <RowDefinition Height="60"/>
                 <RowDefinition Height="30"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
@@ -29,14 +29,14 @@
             <Label Content="Запазване"  FontSize="17" FontWeight="DemiBold" HorizontalAlignment="Left"/>
 
             <DockPanel Grid.Row="1">
-                <Label Content="Име" DockPanel.Dock="Left"/>
-                <TextBox  Grid.Column="1"  HorizontalAlignment="Stretch" VerticalAlignment="Center" TabIndex="2" Height="25" VerticalContentAlignment="Center" BorderThickness="1" FontSize="13"/>
+                <Label Content="Име" DockPanel.Dock="Top"/>
+                <TextBox  Grid.Column="1" Text="{Binding FileName}" HorizontalAlignment="Stretch" VerticalAlignment="Center" TabIndex="2" Height="25" VerticalContentAlignment="Center" BorderThickness="1" FontSize="13"/>
             </DockPanel>
 
-            <Button Grid.Row="2" Width="45" Height="20" Foreground="White" Content="Запази" HorizontalAlignment="Right" Style="{StaticResource NormalButtonMouseOverSyle}"/>
+            <CheckBox Grid.Row="2" Content="Отвори след запазване" IsChecked="{Binding OpenAfterSave}" VerticalAlignment="Center"/>
 
+            <Button Grid.Row="3" Command="{Binding SaveSummariesCommand}" Content="Запази" FontSize="13" FontWeight="DemiBold" Foreground="White" Margin="0,0" BorderThickness="0" Style="{StaticResource NormalButtonMouseOverSyle}" VerticalAlignment="Center" Height="25"/>
 
-            <DataGrid Name="FilesGrid" Grid.Row="3" ItemsSource="{Binding SummaryFiles}"/>
         </Grid>
     </Border>
 

@@ -34,5 +34,13 @@ namespace InventoryManagerServices
             return await Task.Run(() => _dataRepository.GetRollDetails(searchType, summary.RollSize.SizeID)).ConfigureAwait(false);
         }
 
+        public void SaveSummaries(ICollection<RollSummary> summaries, string fileName, bool openAfter)
+        {
+            var csvText = CSVService.ConvertSummariesToCSV(summaries);
+            var path = DirectoryService.SaveToFile(csvText, $@"Spravki\", $"{fileName}.csv");
+            if (openAfter)
+                DirectoryService.OpenFile(path);
+        }
+
     }
 }

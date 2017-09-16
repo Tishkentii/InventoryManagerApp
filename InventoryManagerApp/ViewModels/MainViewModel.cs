@@ -15,14 +15,12 @@ namespace InventoryManagerApp.ViewModels
     class MainViewModel : ViewModelBase
     {
         readonly BusinessService _businessService;
-        readonly DirectoryService _dirService;
 
         public MainViewModel() { }
 
-        public MainViewModel(BusinessService businessService, DirectoryService directoryService)
+        public MainViewModel(BusinessService businessService)
         {
             _businessService = businessService;
-            _dirService = directoryService;
             MessengerInstance.Register<SearchCriteria>(this, OnSearch);
         }
 
@@ -76,7 +74,7 @@ namespace InventoryManagerApp.ViewModels
 
         void ShowSave()
         {
-            ActivePanelVM = new SaveViewModel(_dirService);
+            ActivePanelVM = new SaveViewModel(_businessService, ResultVM.Summaries);
             ActivePanelType = OptionPanelType.None;
             ActivePanelType = OptionPanelType.Save;
 

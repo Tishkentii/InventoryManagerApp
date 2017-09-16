@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -8,19 +9,23 @@ using InventoryManagerModel.DTOs;
 
 namespace InventoryManagerServices
 {
-    public class DirectoryService
+    internal class DirectoryService
     {
-        // todo inject dir where files are to be saved
-
-        public ICollection<SummaryFileInfo> GetSummaryFilesInDirectory()
+        internal static string SaveToFile(string csvText, string relativePath, string fileName)
         {
-            var result = new HashSet<SummaryFileInfo>();
-            var fullPaths = Directory.GetFiles(Directory.GetCurrentDirectory());
-            foreach (var path in fullPaths)
-            {
-                result.Add(new SummaryFileInfo(Path.GetFileName(path), path));
-            }
-            return result;
+            var saveDirectory = $@"{Directory.GetCurrentDirectory()}\{relativePath}";
+            if (!Directory.Exists(saveDirectory))
+                Directory.CreateDirectory(saveDirectory);
+
+            var fullPath = $@"{saveDirectory}{fileName}";
+            File.WriteAllText(fullPath, csvText);
+            return fullPath;
         }
+
+        internal static void OpenFile(string path)
+        {
+            Process.Start(path);
+        }
+
     }
 }

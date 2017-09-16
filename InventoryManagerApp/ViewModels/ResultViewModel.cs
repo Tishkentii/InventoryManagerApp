@@ -19,21 +19,6 @@ namespace InventoryManagerApp.ViewModels
         readonly BusinessService _rollService;
         readonly SearchCriteria _searchCriteria;
 
-        public ResultViewModel()
-        {
-            //SearchCriteria = new SearchCriteria()
-            //{
-            //    Width = 200,
-            //    Thickness = 70,
-            //    SearchType = SearchType.Stock
-            //};
-            //Summaries = new List<RollSummary>()
-            //{
-            //    new RollSummary(new RollSize(1,RollType.Tube, 200,90),10, 100.12, 4381, DateTime.MaxValue, DateTime.MinValue),
-            //    new RollSummary(new RollSize(1,RollType.Tube, 200,90), 7, 70.12, 481, DateTime.MaxValue, DateTime.MinValue),
-            //};
-        }
-
         public ResultViewModel(BusinessService rollService, SearchCriteria criteria, ICollection<RollSummary> summaries)
         {
             _rollService = rollService;
