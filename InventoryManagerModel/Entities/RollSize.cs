@@ -10,10 +10,10 @@ namespace InventoryManagerModel.Entities
     {
         public RollSize(int sizeID, RollType type, int width, int thickness)
         {
-            SizeID = sizeID;
+            SizeID = sizeID > 0 ? sizeID : throw new ArgumentException("Invalid sizeID");
             Type = type;
-            Width = width;
-            Thickness = thickness;
+            Width = width > 0 ? width : throw new ArgumentException("Invalid width");
+            Thickness = thickness > 0 ? thickness : throw new ArgumentException("Invalid thickness");
         }
 
         public int SizeID

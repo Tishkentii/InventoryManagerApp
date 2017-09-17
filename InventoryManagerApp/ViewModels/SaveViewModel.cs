@@ -9,7 +9,7 @@ using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using InventoryManagerModel;
-using InventoryManagerModel.DTOs;
+using InventoryManagerModel.Entities;
 using InventoryManagerServices;
 
 namespace InventoryManagerApp.ViewModels
@@ -41,9 +41,13 @@ namespace InventoryManagerApp.ViewModels
 
         #endregion
 
-        RelayCommand _SaveSummariesCommand;
+        RelayCommand _saveSummariesCommand;
         public ICommand SaveSummariesCommand =>
-            _SaveSummariesCommand ?? (_SaveSummariesCommand = new RelayCommand(SaveSummaries, () => _rollSummaries.Count > 0 && !String.IsNullOrEmpty(FileName)));
+            _saveSummariesCommand ?? (_saveSummariesCommand = new RelayCommand(SaveSummaries, () => _rollSummaries.Count > 0 && !String.IsNullOrEmpty(FileName)));
+
+        RelayCommand _openSaveFolderCommand;
+        public ICommand OpenSaveFolderDestinationCommand =>
+            _openSaveFolderCommand ?? (_openSaveFolderCommand = new RelayCommand(_businessService.OpenSaveDestinationFoler));
 
 
         void SaveSummaries()

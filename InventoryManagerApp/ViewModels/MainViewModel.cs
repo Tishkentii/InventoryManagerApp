@@ -50,14 +50,14 @@ namespace InventoryManagerApp.ViewModels
         #endregion
 
         #region Commands
-
+        // TODO make search and save buttons toggle the pannels
         RelayCommand _showSearchCommand;
         public ICommand ShowSearchCommand =>
             _showSearchCommand ?? (_showSearchCommand = new RelayCommand(ShowSearch));
 
         RelayCommand _showSaveCommand;
         public ICommand ShowSaveCommand =>
-            _showSaveCommand ?? (_showSaveCommand = new RelayCommand(ShowSave));
+            _showSaveCommand ?? (_showSaveCommand = new RelayCommand(ShowSave, () => _resultViewModel != null));
 
         RelayCommand _synchronizeDatabasesCommand;
         public ICommand SynchronizeDatabasesCommand =>
@@ -82,9 +82,10 @@ namespace InventoryManagerApp.ViewModels
 
         async void OnSearch(SearchCriteria criteria)
         {
-            var summary = await _businessService.GetRollsSummaryAsync(criteria).ConfigureAwait(false);
+            var summary = await _businessService.GetRollsSummaryAsync(criteria);
             ResultVM = new ResultViewModel(_businessService, criteria, summary);
             ActivePanelType = OptionPanelType.None;
+            _showSaveCommand.RaiseCanExecuteChanged();
         }
 
         async Task SynchronizeDatabasesAsync()

@@ -23,19 +23,25 @@
                 <RowDefinition Height="40"/>
                 <RowDefinition Height="60"/>
                 <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
             <Label Content="Запазване"  FontSize="17" FontWeight="DemiBold" HorizontalAlignment="Left"/>
 
             <DockPanel Grid.Row="1">
-                <Label Content="Име" DockPanel.Dock="Top"/>
+                <Label Content="Име на файла" DockPanel.Dock="Top"/>
                 <TextBox  Grid.Column="1" Text="{Binding FileName}" HorizontalAlignment="Stretch" VerticalAlignment="Center" TabIndex="2" Height="25" VerticalContentAlignment="Center" BorderThickness="1" FontSize="13"/>
             </DockPanel>
 
             <CheckBox Grid.Row="2" Content="Отвори след запазване" IsChecked="{Binding OpenAfterSave}" VerticalAlignment="Center"/>
 
             <Button Grid.Row="3" Command="{Binding SaveSummariesCommand}" Content="Запази" FontSize="13" FontWeight="DemiBold" Foreground="White" Margin="0,0" BorderThickness="0" Style="{StaticResource NormalButtonMouseOverSyle}" VerticalAlignment="Center" Height="25"/>
+
+            <Button Grid.Row="3" Command="{Binding SaveSummariesCommand}" Content="Запази" FontSize="13" FontWeight="DemiBold" Foreground="White" Margin="0,0" BorderThickness="0" Style="{StaticResource NormalButtonMouseOverSyle}" VerticalAlignment="Center" Height="25"/>
+
+            <Button Grid.Row="4" Command="{Binding OpenSaveFolderDestinationCommand}" Content="Отвори папка" FontSize="13" FontWeight="DemiBold" Foreground="White" Margin="0,0" BorderThickness="0" Style="{StaticResource NormalButtonMouseOverSyle}" VerticalAlignment="Bottom" Height="25"/>
 
         </Grid>
     </Border>

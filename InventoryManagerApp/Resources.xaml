@@ -5,16 +5,19 @@
                     xmlns:vm="clr-namespace:InventoryManagerApp.ViewModels"
                     xmlns:v="clr-namespace:InventoryManagerApp.Views">
 
+    <!--Converters-->
     <conv:NullToVisibilityConverter x:Key="NullToVisibilityConverter"/>
     <conv:EnumMatchToBooleanConverter x:Key="EnumToBoolConverter"/>
     <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
 
+    <!--Brushes-->
     <SolidColorBrush x:Key="TitleBarBrush" Color="#FF0078D7"/>
     <SolidColorBrush x:Key="TitleBarHighlightBrush" Color="#FF498BCF"/>
     <SolidColorBrush x:Key="ApplicationBrush" Color="#FF5A9FE4"/>
     <SolidColorBrush x:Key="HighlightBrush" Color="#FF76ADE4"/>
     <SolidColorBrush x:Key="AccentBrush" Color="#FFE2E8F3"/>
 
+    <!--View-ViewModel DataTemplates-->
     <DataTemplate DataType="{x:Type vm:SearchViewModel}">
         <v:SearchView/>
     </DataTemplate>
@@ -39,7 +42,6 @@
     <Storyboard x:Key="ShowOptionPanelScrolltoryboard">
         <DoubleAnimation Storyboard.TargetProperty="Width" From="0" To="200" Duration="0:0:0.15" AutoReverse="False"/>
         <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0.0" To="1.0" Duration="0:0:0.15" Storyboard.TargetName="{x:Null}"/>
-
     </Storyboard>
 
     <Storyboard x:Key="HideOptionPanelScrolltoryboard">
@@ -74,6 +76,14 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding RollCount}" Value="0">
+                <Setter Property="Foreground" Value="#FFE44B4B"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding IsSelected, RelativeSource= {RelativeSource AncestorType={x:Type DataGridRow}}}" Value="True">
+                <Setter Property="Foreground" Value="White" />
+            </DataTrigger>
+        </Style.Triggers>
     </Style>
 
     <Style x:Key="DataGridDetailsCellStyle" TargetType="DataGridCell">

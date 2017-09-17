@@ -50,9 +50,11 @@
         <Label Content="{Binding SearchSummaryString}" FontSize="14" FontWeight="DemiBold" VerticalAlignment="Center" Margin="5,0"/>
 
         <Border Grid.Row="1" BorderBrush="LightGray" BorderThickness="0,1,0,0">
-            <DataGrid  Margin="0" RowBackground="White" AlternatingRowBackground="{StaticResource AccentBrush}" SelectionMode="Single" IsReadOnly="True" AutoGenerateColumns="False" HeadersVisibility="Column"
-                  ItemsSource="{Binding Source={StaticResource SummaryItems}}" SelectedItem="{Binding SelectedSummary}" BorderThickness="0" GridLinesVisibility="None"
-                  CellStyle="{StaticResource DataGridSummaryCellStyle}" Background="WhiteSmoke">
+            <DataGrid ItemsSource="{Binding Source={StaticResource SummaryItems}}" 
+                      SelectedItem="{Binding SelectedSummary}"
+                      CellStyle="{StaticResource DataGridSummaryCellStyle}"
+                      AlternatingRowBackground="{StaticResource AccentBrush}"
+                      Margin="0" RowBackground="White"  SelectionMode="Single" IsReadOnly="True" AutoGenerateColumns="False" HeadersVisibility="Column" BorderThickness="0" GridLinesVisibility="None" Background="WhiteSmoke">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Ширина (мм)" Binding="{Binding RollSize.Width}" Width="85" SortDirection="Ascending"
                                     HeaderStyle="{StaticResource ColumnHeaderStyle1}"/>
@@ -60,15 +62,16 @@
                                     HeaderStyle="{StaticResource ColumnHeaderStyle2}"/>
                     <DataGridTextColumn Header="Брой ролки" Binding="{Binding RollCount}" Width="80" 
                                     HeaderStyle="{StaticResource ColumnHeaderStyle1}"/>
-                    <DataGridTextColumn Header="Обша дължина (м)" Binding="{Binding TotalLength, StringFormat={}{0:### ###.00}}" Width="115" 
+                    <DataGridTextColumn Header="Обша дължина (м)" Binding="{Binding TotalLength, StringFormat={}{0:### ###.##}}" Width="115" 
                                     HeaderStyle="{StaticResource ColumnHeaderStyle2}"/>
-                    <DataGridTextColumn Header="Общо тегло (кг)" Binding="{Binding TotalWeight, StringFormat={}{0:### ###.00}}" Width="100" 
+                    <DataGridTextColumn Header="Общо тегло (кг)" Binding="{Binding TotalWeight, StringFormat={}{0:### ###.##}}" Width="100" 
                                     HeaderStyle="{StaticResource ColumnHeaderStyle1}"/>
                     <DataGridTextColumn Header="Най-рано произведена" Binding="{Binding FirstDateCreated, StringFormat=\{0:dd.MM.yyyy\}}" 
                                     HeaderStyle="{StaticResource ColumnHeaderStyle2}" Width="*" />
                     <DataGridTextColumn Header="Най-късно произведена" Binding="{Binding LastDateCreated, StringFormat=\{0:dd.MM.yyyy\}}" 
                                     HeaderStyle="{StaticResource ColumnHeaderStyle1}" Width="*" />
                 </DataGrid.Columns>
+                
                 <DataGrid.InputBindings>
                     <MouseBinding Gesture="LeftDoubleClick" Command="{Binding ShowDetailsCommand}"/>
                 </DataGrid.InputBindings>

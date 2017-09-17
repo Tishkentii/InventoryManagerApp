@@ -30,8 +30,8 @@ namespace InventoryManagerDataAccess.Internal
                     rollCount: Convert.ToInt32(data["Count"]),
                     totalLength: data["TotalLength"] != DBNull.Value ? Convert.ToDouble(data["TotalLength"]) : 0,
                     totalWeight: data["TotalWeight"] != DBNull.Value ? Convert.ToDouble(data["TotalWeight"]) : 0,
-                    lastDateCreated: lastCreated,
-                    firstDateCreated: firstCreated
+                    firstDateCreated: firstCreated,
+                    lastDateCreated: lastCreated
                 );
         }
 

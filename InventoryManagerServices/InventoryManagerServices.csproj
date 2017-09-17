@@ -41,8 +41,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BusinessService.cs" />
-    <Compile Include="CSVService.cs" />
-    <Compile Include="DirectoryService.cs" />
+    <Compile Include="Internal\CSVService.cs" />
+    <Compile Include="Internal\DirectoryService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

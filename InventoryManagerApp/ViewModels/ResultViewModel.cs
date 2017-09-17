@@ -19,6 +19,8 @@ namespace InventoryManagerApp.ViewModels
         readonly BusinessService _rollService;
         readonly SearchCriteria _searchCriteria;
 
+        public ResultViewModel() { }
+
         public ResultViewModel(BusinessService rollService, SearchCriteria criteria, ICollection<RollSummary> summaries)
         {
             _rollService = rollService;
@@ -29,11 +31,15 @@ namespace InventoryManagerApp.ViewModels
 
         #region Properties
 
-        //public SearchCriteria SearchCriteria { get; private set; }
+        public string SearchSummaryString
+        {
+            get; private set;
+        }
 
-        public string SearchSummaryString { get; private set; }
-
-        public ICollection<RollSummary> Summaries { get; private set; }
+        public ICollection<RollSummary> Summaries
+        {
+            get; private set;
+        }
 
         RollSummary _selectedSummary;
         public RollSummary SelectedSummary
@@ -56,7 +62,6 @@ namespace InventoryManagerApp.ViewModels
             get => _detailsVisible;
             set => Set(ref _detailsVisible, value);
         }
-
 
         #endregion
 

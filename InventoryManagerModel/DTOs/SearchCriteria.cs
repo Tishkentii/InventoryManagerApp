@@ -9,13 +9,11 @@ namespace InventoryManagerModel.DTOs
 {
     public class SearchCriteria : NotificationModelBase
     {
-        public SearchCriteria()
-        {
-            _searchType = SearchType.Stock;
-            _rollType = RollType.Tube;
-        }
-
-        #region Properties
+        //public SearchCriteria()
+        //{
+        //    _searchType = SearchType.Stock;
+        //    _rollType = RollType.Tube;
+        //}
 
         SearchType _searchType;
         public SearchType SearchType
@@ -55,6 +53,5 @@ namespace InventoryManagerModel.DTOs
             set;
         }
 
-        #endregion
     }
 }

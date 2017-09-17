@@ -187,5 +187,10 @@
   <ItemGroup>
     <Resource Include="app.ico" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\save.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

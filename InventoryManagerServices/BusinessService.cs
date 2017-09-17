@@ -7,6 +7,7 @@ using InventoryManagerDataAccess.Interfaces;
 using InventoryManagerModel;
 using InventoryManagerModel.DTOs;
 using InventoryManagerModel.Entities;
+using InventoryManagerServices.Internal;
 
 namespace InventoryManagerServices
 {
@@ -37,10 +38,14 @@ namespace InventoryManagerServices
         public void SaveSummaries(ICollection<RollSummary> summaries, string fileName, bool openAfter)
         {
             var csvText = CSVService.ConvertSummariesToCSV(summaries);
-            var path = DirectoryService.SaveToFile(csvText, $@"Spravki\", $"{fileName}.csv");
+            var path = DirectoryService.SaveToFile(csvText, $"{fileName}.csv");
             if (openAfter)
                 DirectoryService.OpenFile(path);
         }
 
+        public void OpenSaveDestinationFoler()
+        {
+            DirectoryService.OpenSaveDestinationFolder();
+        }
     }
 }

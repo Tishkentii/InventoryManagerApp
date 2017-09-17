@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26730.8
+VisualStudioVersion = 15.0.26730.15
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InventoryManagerApp", "InventoryManagerApp\InventoryManagerApp.csproj", "{071798A4-C275-4FAF-B736-13150B699FAC}"
 EndProject
@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InventoryManagerDataAccess"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InventoryManagerServices", "InventoryManagerServices\InventoryManagerServices.csproj", "{FC21743B-8132-47A1-B56E-F294B0D3DE69}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InventoryManagerAppTests", "InventoryManagerAppTests\InventoryManagerAppTests.csproj", "{0C7C0B94-060A-4061-BBC2-FFEABA2F3296}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InventoryManagerTests", "InventoryManagerTests\InventoryManagerTests.csproj", "{0C7C0B94-060A-4061-BBC2-FFEABA2F3296}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

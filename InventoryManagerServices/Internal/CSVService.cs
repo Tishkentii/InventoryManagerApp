@@ -5,8 +5,9 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using InventoryManagerModel.DTOs;
+using InventoryManagerModel.Entities;
 
-namespace InventoryManagerServices
+namespace InventoryManagerServices.Internal
 {
     internal class CSVService
     {
@@ -19,16 +20,6 @@ namespace InventoryManagerServices
             summaryText.AddRange(summaries.Select(s => String.Join(";", s.RollSize.Width, s.RollSize.Thickness, s.RollSize.Type, s.RollCount, s.TotalLength, s.TotalWeight, s.FirstDateCreated, s.LastDateCreated)));
             string result = String.Join(Environment.NewLine, summaryText);
             return result;
-        }
-
-        static string GetSummariesHeader()
-        {
-            var builder = new StringBuilder();
-            PropertyInfo[] headerInfo = typeof(RollSummary).GetProperties();
-            foreach (var info in headerInfo)
-                builder.Append($"{info.Name};");
-            builder.Remove(builder.Length - 2, 1);
-            return builder.ToString();
         }
     }
 }

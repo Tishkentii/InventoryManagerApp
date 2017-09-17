@@ -11,14 +11,14 @@ namespace InventoryManagerModel.Entities
     {
         public Roll(int id, RollSize size, string producedBy, double length, double weight, string notes, DateTime createdOn, DateTime? consumedOn)
         {
-            RollID = id > 0 ? id : throw new ArgumentException("id");
-            Size = size;
-            ProducedBy = !String.IsNullOrEmpty(producedBy) ? producedBy : throw new ArgumentException("producedBy");
-            Length = length > 0 ? length : throw new ArgumentException("length");
-            Weight = weight > 0 ? weight : throw new ArgumentException("weight");
-            Notes = notes ?? throw new ArgumentException("comment");
+            RollID = id > 0 ? id : throw new ArgumentException("Invalid id");
+            Size = size ?? throw new ArgumentNullException("size is null");
+            ProducedBy = !String.IsNullOrEmpty(producedBy) ? producedBy : throw new ArgumentException("Invalid producedBy");
+            Length = length > 0 ? length : throw new ArgumentException("Invalid length");
+            Weight = weight > 0 ? weight : throw new ArgumentException("Invalid weight");
+            Notes = notes ?? throw new ArgumentException("Invalid notes");
             if (consumedOn.HasValue && createdOn > consumedOn.Value)
-                throw new ArgumentException("createdOn/consumedOn");
+                throw new ArgumentException("Invalid createdOn/consumedOn");
             CreatedOn = createdOn;
             ConsumedOn = consumedOn;
         }

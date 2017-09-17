@@ -37,7 +37,6 @@
                     <Image Source="/InventoryManagerApp;component/Assets/minimize.png" RenderOptions.BitmapScalingMode="HighQuality" Margin="9"/>
                 </Button>
                 
-                <!--<Image Source="/InventoryManagerApp;component/Assets/app_icon.png" DockPanel.Dock="Left" Margin="7" HorizontalAlignment="Left" VerticalAlignment="Center" RenderOptions.BitmapScalingMode="HighQuality"/>-->
                 <TextBlock Text="Тоневи ООД" Foreground="White" FontWeight="DemiBold" FontSize="12" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="35,0"/>
 
             </DockPanel>
@@ -57,7 +56,7 @@
                 </Button>
 
                 <Button Command="{Binding ShowSaveCommand}" BorderThickness="0"  DockPanel.Dock="Top" VerticalAlignment="Top" Style="{StaticResource NormalButtonMouseOverSyle}">
-                    <Image Source="/InventoryManagerApp;component/Assets/search.png" Margin="7" RenderOptions.BitmapScalingMode="HighQuality"/>
+                    <Image Source="/InventoryManagerApp;component/Assets/save.png" Margin="1" RenderOptions.BitmapScalingMode="HighQuality"/>
                 </Button>
 
                 <Button BorderThickness="0" DockPanel.Dock="Bottom" VerticalAlignment="Bottom" Style="{StaticResource NormalButtonMouseOverSyle}">

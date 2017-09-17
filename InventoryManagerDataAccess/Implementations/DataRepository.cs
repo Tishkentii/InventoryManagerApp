@@ -18,6 +18,9 @@ namespace InventoryManagerDataAccess.Implementations
 
         public DataRepository(string sqlConnectionString, string accessConnectionString)
         {
+            if (String.IsNullOrEmpty(sqlConnectionString) || String.IsNullOrEmpty(accessConnectionString))
+                throw new ArgumentException("Invalid connection strings");
+
             _sqlConnectionString = sqlConnectionString;
             _accessConnectionString = accessConnectionString;
         }
