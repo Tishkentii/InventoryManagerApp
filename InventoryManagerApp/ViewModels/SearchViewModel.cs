@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.CommandWpf;
 using InventoryManagerModel;
 using InventoryManagerModel.DTOs;
 
@@ -26,7 +26,7 @@ namespace InventoryManagerApp.ViewModels
             set;
         }
 
-        public bool DatesVisible => 
+        public bool DatesVisible =>
             Criteria.SearchType != SearchType.Stock;
 
         #endregion

@@ -66,9 +66,9 @@
                                     HeaderStyle="{StaticResource ColumnHeaderStyle2}"/>
                     <DataGridTextColumn Header="Общо тегло (кг)" Binding="{Binding TotalWeight, StringFormat={}{0:### ###.##}}" Width="100" 
                                     HeaderStyle="{StaticResource ColumnHeaderStyle1}"/>
-                    <DataGridTextColumn Header="Най-рано произведена" Binding="{Binding FirstDateCreated, StringFormat=\{0:dd.MM.yyyy\}}" 
+                    <DataGridTextColumn Header="Първо произведена" Binding="{Binding FirstDateCreated, StringFormat=\{0:dd.MM.yyyy\}}" 
                                     HeaderStyle="{StaticResource ColumnHeaderStyle2}" Width="*" />
-                    <DataGridTextColumn Header="Най-късно произведена" Binding="{Binding LastDateCreated, StringFormat=\{0:dd.MM.yyyy\}}" 
+                    <DataGridTextColumn Header="Последно произведена" Binding="{Binding LastDateCreated, StringFormat=\{0:dd.MM.yyyy\}}" 
                                     HeaderStyle="{StaticResource ColumnHeaderStyle1}" Width="*" />
                 </DataGrid.Columns>
                 

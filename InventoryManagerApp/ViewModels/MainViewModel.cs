@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.CommandWpf;
 using InventoryManagerModel.DTOs;
 using InventoryManagerServices;
 
@@ -50,7 +50,7 @@ namespace InventoryManagerApp.ViewModels
         #endregion
 
         #region Commands
-        // TODO make search and save buttons toggle the pannels
+
         RelayCommand _showSearchCommand;
         public ICommand ShowSearchCommand =>
             _showSearchCommand ?? (_showSearchCommand = new RelayCommand(ShowSearch));
@@ -67,17 +67,30 @@ namespace InventoryManagerApp.ViewModels
 
         void ShowSearch()
         {
-            ActivePanelVM = new SearchViewModel();
-            ActivePanelType = OptionPanelType.None;
-            ActivePanelType = OptionPanelType.Search;
+            if (ActivePanelType == OptionPanelType.Search)
+            {
+                ActivePanelType = OptionPanelType.None;
+            }
+            else
+            {
+                ActivePanelVM = new SearchViewModel();
+                ActivePanelType = OptionPanelType.None;
+                ActivePanelType = OptionPanelType.Search;
+            }
         }
 
         void ShowSave()
         {
-            ActivePanelVM = new SaveViewModel(_businessService, ResultVM.Summaries);
-            ActivePanelType = OptionPanelType.None;
-            ActivePanelType = OptionPanelType.Save;
-
+            if (ActivePanelType == OptionPanelType.Save)
+            {
+                ActivePanelType = OptionPanelType.None;
+            }
+            else
+            {
+                ActivePanelVM = new SaveViewModel(_businessService, ResultVM.Summaries);
+                ActivePanelType = OptionPanelType.None;
+                ActivePanelType = OptionPanelType.Save;
+            }
         }
 
         async void OnSearch(SearchCriteria criteria)
@@ -85,7 +98,6 @@ namespace InventoryManagerApp.ViewModels
             var summary = await _businessService.GetRollsSummaryAsync(criteria);
             ResultVM = new ResultViewModel(_businessService, criteria, summary);
             ActivePanelType = OptionPanelType.None;
-            _showSaveCommand.RaiseCanExecuteChanged();
         }
 
         async Task SynchronizeDatabasesAsync()
